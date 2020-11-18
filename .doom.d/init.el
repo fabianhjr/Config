@@ -35,7 +35,7 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :editor
-       (evil +everywhere); come to the dark side, we have cookies
+       evil
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
        (format +onsave)  ; automated prettiness
@@ -73,7 +73,6 @@
        ; Normal
        cc                ; C/C++/Obj-C madness
        crystal           ; ruby at the speed of c
-       d
        (go +lsp)         ; the hipster dialect
        ess               ; emacs speaks statistics
        java ; the poster child for carpal tunnel syndrome

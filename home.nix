@@ -14,7 +14,18 @@
     stateVersion = "21.03";
 
     packages = with pkgs;
-      [ firefox ];
+      [
+        aspell aspellDicts.en aspellDicts.es
+        bat
+        bind
+        calibre
+        celluloid
+        darcs
+        darktable
+        discord
+        firefox
+        git git-lfs
+      ];
   };
 
   programs = {

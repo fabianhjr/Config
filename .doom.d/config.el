@@ -10,4 +10,7 @@
 (setq org-agenda-files "~/Documents/PersonalKnowledgeBase/Agenda.org")
 (setq org-roam-directory org-directory)
 
+(after! elfeed
+  (setq elfeed-search-filter "@1-year-ago +unread"))
+
 (add-to-list 'auto-mode-alist '("\\.coconut\\'" . python-mode))
