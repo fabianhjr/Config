@@ -1,0 +1,17 @@
+# Ignore without extension
+*
+!*.*
+!*/
+
+# Other VCS
+
+.anu/
+_darcs/
+darcs.marks
+git.marks
+
+# Compiled-objects
+
+*.class # Java Class Files
+*.hi # Haskell Interface Files
+*.o # C/C++ Object Files

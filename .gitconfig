@@ -1,0 +1,21 @@
+[user]
+	email = fabianhjr@protonmail.com
+	name = Fabián Heredia Montiel
+	signingkey = DBF9E66A277BA933701913FDEAECA854886791AC
+[core]
+	excludesFile = ~/.gitignore
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[github]
+	user = fabianhjr
+[init]
+	defaultBranch = main
+[merge]
+	conflictStyle = diff3
+[pull]
+	rebase = true
+[push]
+	default = current
