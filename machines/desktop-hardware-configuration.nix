@@ -15,16 +15,11 @@
 
   # TODO: For optimizations
   nixpkgs.localSystem = {
-    kernelArch = "x86_64";
-    kernelAutoModules = true;
-    kernelTarget = "bzImage";
-    kernelBaseConfig = "defconfig";
-    name = "pc";
-    platform.gcc.arch = "znver2";
-    platform.gcc.tune = "znver2";
+    gcc.arch = "znver2";
+    gcc.tune = "znver2";
     system = "x86_64-linux";
   };
-  
+
   boot.initrd = {
     availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ "dm-snapshot" ];

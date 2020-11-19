@@ -35,7 +35,7 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :editor
-       evil
+       (evil +everywhere)
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
        (format +onsave)  ; automated prettiness

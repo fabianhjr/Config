@@ -1,11 +1,20 @@
 { pkgs, ... }:
 
 {
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-  ];
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+
+      gcc.arch = "znver2";
+      gcc.tune = "znver2";
+    };
+
+    overlays = [
+      (import (builtins.fetchTarball {
+        url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      }))
+    ];
+  };
   
   home = {
     username = "fabian";
@@ -14,21 +23,27 @@
     stateVersion = "21.03";
 
     packages = with pkgs;
-      [
-        aspell aspellDicts.en aspellDicts.es
-        bat
-        bind
-        calibre
-        celluloid
-        darcs
-        darktable
-        discord
-        firefox
-        git git-lfs
-      ];
+      let
+        llvm = llvmPackages_11;
+        communications = [ discord ];
+        functional = [
+          agda agda-pkg
+          ghc cabal-install
+          idris
+        ];
+        imperative = [
+          llvm.clang
+        ];
+        media = [ celluloid darktable shotwell];
+        spell = [ aspell aspellDicts.en aspellDicts.es ];
+        tools = [ bind llvm.bintools ripgrep tree zeal ];
+        vc = [ darcs git git-lfs pijul ];
+      in
+        communications ++ functional ++ imperative ++ media ++ spell ++ tools ++ vc;
   };
 
   programs = {
+    bat.enable = true;
     browserpass.enable = true;
 
     emacs = {
@@ -77,6 +92,7 @@
         ];
     };
 
+    firefox.enable = true;
     home-manager.enable = true;
   };
 
