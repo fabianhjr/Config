@@ -3,16 +3,14 @@
 {
   imports = [ ./hardware-configuration.nix ./cachix.nix ];
 
+  system.stateVersion = "20.09";
+  
   nix.trustedUsers = [ "root" "@wheel" ];
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      firefox.enableGnomeExtensions = true;
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
+    firefox.enableGnomeExtensions = true;
   };
-
-  system.stateVersion = "20.09";
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -114,7 +112,7 @@
 
     ipfs = {
       enable   = true;
-      package  = pkgs.ipfs_latest;
+      # package  = pkgs.ipfs_latest;
       enableGC = true;
       localDiscovery  = true;
       startWhenNeeded = true;
