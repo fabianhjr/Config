@@ -16,8 +16,8 @@
   # TODO: For optimizations
   # nixpkgs.localSystem = {
   #   system = "x86_64-linux";
-  #   platform.gcc.arch = "znver1";
-  #   platform.gcc.tune = "znver1";
+  #   platform.gcc.arch = "znver2";
+  #   platform.gcc.tune = "znver2";
   # };
   
   boot.initrd = {

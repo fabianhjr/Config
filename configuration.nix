@@ -4,7 +4,7 @@
   imports = [ ./hardware-configuration.nix ./cachix.nix ];
 
   system.stateVersion = "20.09";
-  
+
   nix.trustedUsers = [ "root" "@wheel" ];
 
   nixpkgs.config = {
