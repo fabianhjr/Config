@@ -22,7 +22,7 @@
       };
     };
 
-    kernelPackages = pkgs.linuxPackages_latest_hardened;
+    kernelPackages = pkgs.linuxPackages_hardened;
 
     kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
 
@@ -58,9 +58,9 @@
   };
 
   hardware = {
+    nvidia.modesetting.enable = true;
     opengl.driSupport32Bit = true;
 
-    # Enable sound.
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
@@ -80,7 +80,13 @@
     hostName = "fabian-tower"; # Define your hostname.
     firewall = {
       allowedTCPPorts = [      4001 8008 8010 8989 ];
+      allowedTCPPortRanges = [
+        { from = 1714; to = 1764; } # GSConnect
+      ];
       allowedUDPPorts = [ 1900 4001 8008 8010 8989 ];
+      allowedUDPPortRanges = [
+        { from = 1714; to = 1764; } # GSConnect
+      ];
     };
   };
 
@@ -103,7 +109,10 @@
 
     xserver = {
       desktopManager.gnome3.enable = true;
-      displayManager.gdm.enable = true;
+      displayManager.gdm = {
+        enable = true;
+        nvidiaWayland = true;
+      };
       enable       = true;
       videoDrivers = [ "nvidia" ];
       layout = "us";
@@ -112,8 +121,19 @@
 
     ipfs = {
       enable   = true;
-      # package  = pkgs.ipfs_latest;
       enableGC = true;
+      extraConfig = {
+        Swarm = {
+          ConnMgr = {
+            LowWater = 1000;
+            HighWater = 2000;
+          };
+          Transports.Network = {
+            TCP = false;
+            Websocket = false;
+          };
+        };
+      };
       localDiscovery  = true;
       startWhenNeeded = true;
     };

@@ -25,22 +25,48 @@
     packages = with pkgs;
       let
         llvm = llvmPackages_11;
-        communications = [ discord ];
+        pythonPackages = python38Packages;
+        communications = [ discord tdesktop ];
+        extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
           agda agda-pkg
-          ghc cabal-install
-          idris
+          ghc haskellPackages.apply-refact cabal-install
+          nix-linter nixpkgs-lint
+          sbcl
         ];
         imperative = [
           llvm.clang
+          crystal
+          nim
+          nodejs
+          perl
+          pythonPackages.python
+          ruby
+          rustc cargo rust-analyzer
+          scala
         ];
-        media = [ celluloid darktable shotwell];
+        lisps = [
+          chez
+        ];
+        media = [ calibre celluloid darktable shotwell];
         spell = [ aspell aspellDicts.en aspellDicts.es ];
-        tools = [ bind llvm.bintools ripgrep tree zeal ];
+        steamOverriden = steam.override {
+          extraPkgs = pkgs: with pkgs; [
+            cabextract winetricks protontricks zlib
+          ];
+          extraLibraries = pkgs: with pkgs; [
+            gnutls zlib.dev
+          ];
+        };
+        tools = [ bind llvm.bintools cmake ripgrep tree youtube-dl zeal ];
         vc = [ darcs git git-lfs pijul ];
       in
-        communications ++ functional ++ imperative ++ media ++ spell ++ tools ++ vc;
+        communications ++ extensions ++ functional ++ imperative ++ lisps ++ media ++ spell ++ [steamOverriden] ++ tools ++ vc;
   };
+
+  dconf.settings."org/gnome/shell".enabled-extensions = with pkgs.gnomeExtensions; [
+    gsconnect.uuid
+  ];
 
   programs = {
     bat.enable = true;
@@ -92,7 +118,10 @@
         ];
     };
 
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      enableGnomeExtensions = true;
+    };
     home-manager.enable = true;
   };
 
