@@ -15,14 +15,19 @@
   # Use the systemd-boot EFI boot loader.
   boot = {
     loader = {
-      systemd-boot.enable      = true;
       efi.canTouchEfiVariables = true;
       grub = {
         efiSupport = true;
+        memtest86.enable = true;
       };
+      systemd-boot.enable      = true;
+      timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxPackages_hardened;
+    kernelPackages = pkgs.linuxPackages_latest_hardened;
+    kernelParams = [
+      "clearcpuid=514" # TODO: Remove on 5.10, UMIP is causing issues with wine
+    ];
 
     kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
 

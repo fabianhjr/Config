@@ -34,6 +34,7 @@
           nix-linter nixpkgs-lint
           sbcl
         ];
+        gaming = [ lutris steamOverriden wine-staging ];
         imperative = [
           llvm.clang
           crystal
@@ -51,17 +52,12 @@
         media = [ calibre celluloid darktable shotwell];
         spell = [ aspell aspellDicts.en aspellDicts.es ];
         steamOverriden = steam.override {
-          extraPkgs = pkgs: with pkgs; [
-            cabextract winetricks protontricks zlib
-          ];
-          extraLibraries = pkgs: with pkgs; [
-            gnutls zlib.dev
-          ];
         };
         tools = [ bind llvm.bintools cmake ripgrep tree youtube-dl zeal ];
         vc = [ darcs git git-lfs pijul ];
       in
-        communications ++ extensions ++ functional ++ imperative ++ lisps ++ media ++ spell ++ [steamOverriden] ++ tools ++ vc;
+        communications ++ extensions ++ functional ++ gaming ++ imperative ++
+          lisps ++ media ++ spell ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions = with pkgs.gnomeExtensions; [
