@@ -25,7 +25,7 @@
     packages = with pkgs;
       let
         llvm = llvmPackages_11;
-        pythonPackages = python38Packages;
+        pythonPackages = python39Packages;
         communications = [ discord tdesktop ];
         extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
@@ -34,16 +34,17 @@
           nix-linter nixpkgs-lint
           sbcl
         ];
-        gaming = [ lutris steamOverriden wine-staging ];
+        gaming = [ lutris wine-staging ];
         imperative = [
           llvm.clang
           crystal
+          nasm
           nim
           nodejs
           perl
           pythonPackages.python
           ruby
-          rustc cargo rust-analyzer
+          rustup rust-analyzer
           scala
         ];
         lisps = [
@@ -51,8 +52,6 @@
         ];
         media = [ calibre celluloid darktable shotwell];
         spell = [ aspell aspellDicts.en aspellDicts.es ];
-        steamOverriden = steam.override {
-        };
         tools = [ bind llvm.bintools cmake ripgrep tree youtube-dl zeal ];
         vc = [ darcs git git-lfs pijul ];
       in
@@ -61,6 +60,9 @@
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions = with pkgs.gnomeExtensions; [
+    "backslide@codeisland.org"
+    "CoverflowAltTab@dmo60.de"
+    "freon@UshakovVasilii_Github.yahoo.com"
     gsconnect.uuid
   ];
 

@@ -1,69 +1,32 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ./cachix.nix ];
+  imports = [ ./hardware-configuration.nix ];
 
-  system.stateVersion = "20.09";
+  #
+  # Nix
+  #
 
   nix.trustedUsers = [ "root" "@wheel" ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    firefox.enableGnomeExtensions = true;
-  };
-
-  # Use the systemd-boot EFI boot loader.
-  boot = {
-    loader = {
-      efi.canTouchEfiVariables = true;
-      grub = {
-        efiSupport = true;
-        memtest86.enable = true;
-      };
-      systemd-boot.enable      = true;
-      timeout = 3;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
     };
 
-    kernelPackages = pkgs.linuxPackages_latest_hardened;
-    kernelParams = [
-      "clearcpuid=514" # TODO: Remove on 5.10, UMIP is causing issues with wine
-    ];
-
-    kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
-
-    # Taken from the NixOS Hardened Profile
-    blacklistedKernelModules = [
-      # Obscure network protocols
-      "ax25"
-      "netrom"
-      "rose"
-
-      # Old or rare or insufficiently audited filesystems
-      "adfs"
-      "affs"
-      "bfs"
-      "befs"
-      "cramfs"
-      "efs"
-      "erofs"
-      "exofs"
-      "freevxfs"
-      "f2fs"
-      "hfs"
-      "hpfs"
-      "jfs"
-      "minix"
-      "nilfs2"
-      "omfs"
-      "qnx4"
-      "qnx6"
-      "sysv"
-      "ufs"
-    ];
+    overlays = [(self: super: {
+      # too expensive
+      # stdenv = super.impureUseNativeOptimizations super.stdenv;
+    })];
   };
 
+  system.stateVersion = "20.09";
+
+  #
+  # General Hardware
+  #
+
   hardware = {
-    nvidia.modesetting.enable = true;
     opengl.driSupport32Bit = true;
 
     pulseaudio = {
@@ -73,16 +36,31 @@
     };
   };
 
+  powerManagement.cpuFreqGovernor = "ondemand";
+
   sound.enable = true;
+
+  #
+  # Boot/Kernel
+  #
+
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      grub.efiSupport = true;
+      systemd-boot.enable = true;
+      timeout = 3;
+    };
+
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
 
   security = {
     allowUserNamespaces = true;
     apparmor.enable = true;
-    chromiumSuidSandbox.enable = true;
   };
 
   networking = {
-    hostName = "fabian-tower"; # Define your hostname.
     firewall = {
       allowedTCPPorts = [      4001 8008 8010 8989 ];
       allowedTCPPortRanges = [
@@ -95,6 +73,10 @@
     };
   };
 
+  #
+  # Extra
+  #
+
   time.timeZone = "America/Mexico_City";
 
   # Cannot put in home.nix as it causes some config issues
@@ -104,8 +86,9 @@
     # Basic Services
     dbus.packages = with pkgs; [ gnome3.dconf ];
 
+    flatpak.enable = true;
+
     gnome3 = {
-      chrome-gnome-shell.enable = true;
       gnome-keyring.enable = true;
       gnome-online-accounts.enable = true;
     };
@@ -114,12 +97,13 @@
 
     xserver = {
       desktopManager.gnome3.enable = true;
+
       displayManager.gdm = {
         enable = true;
         nvidiaWayland = true;
       };
-      enable       = true;
-      videoDrivers = [ "nvidia" ];
+
+      enable = true;
       layout = "us";
       xkbVariant = "dvorak-intl";
     };
