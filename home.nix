@@ -10,6 +10,11 @@
     };
 
     overlays = [
+      (self: super: {
+        # stdenv = super.impureUseNativeOptimizations super.stdenv;
+        # gcc = super.gcc10;
+      })
+
       (import (builtins.fetchTarball {
         url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
       }))
@@ -29,7 +34,7 @@
         communications = [ discord tdesktop ];
         extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
-          agda agda-pkg
+          # agda agda-pkg
           ghc haskellPackages.apply-refact cabal-install
           nix-linter nixpkgs-lint
           sbcl
@@ -72,7 +77,7 @@
 
     emacs = {
       enable = true;
-      package = pkgs.emacsGcc.override { nativeComp = true; };  
+      # package = pkgs.emacsGcc.override { nativeComp = true; };
       extraPackages =  epkgs: with epkgs;
         [
           # General
@@ -106,7 +111,7 @@
           vterm
           yasnippet
           # Language Specific
-          agda2-mode # Needs to be from same build as agda
+          # agda2-mode # Needs to be from same build as agda
           cider
           ess
           markdown-mode
@@ -124,12 +129,7 @@
   };
 
   services = {
-    emacs = {
-      enable = true;
-    };
-    
-    gpg-agent = {
-      enable              = true;
-    };
+    emacs.enable = true;
+    gpg-agent.enable = true;
   };
 }

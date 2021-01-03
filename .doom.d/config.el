@@ -1,5 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(setq-default indent-tabs-mode t)
+
 (setq user-full-name "Fabián Heredia Montiel"
       user-mail-address "fabianhjr@protonmail.com")
 

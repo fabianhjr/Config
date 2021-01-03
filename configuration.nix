@@ -37,7 +37,6 @@
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
-
   sound.enable = true;
 
   #
@@ -52,7 +51,8 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest_hardened;
+    kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
   security = {
