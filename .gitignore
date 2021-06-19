@@ -4,14 +4,22 @@
 !*/
 
 # Other VCS
-
 .anu/
 _darcs/
+.pijul/
+
+# VCS Cross Support
 darcs.marks
 git.marks
 
 # Compiled-objects
 
 *.class # Java Class Files
-*.hi # Haskell Interface Files
-*.o # C/C++ Object Files
+*.hi    # Haskell Interface Files
+*.o     # C/C++ Object Files
+*.ttm   # Idris2
+*.ttc   # Idris2
+
+# Output Dirs
+
+.build/

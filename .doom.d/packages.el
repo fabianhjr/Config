@@ -3,4 +3,6 @@
 
 (package! bongo)
 (package! d-mode)
-(package! nov)
+(package! prop-menu)
+
+(package! idris-mode :recipe (:host github :repo "idris-hackers/idris-mode"))

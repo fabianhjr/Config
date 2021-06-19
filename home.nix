@@ -10,17 +10,13 @@
     };
 
     overlays = [
-      (self: super: {
-        # stdenv = super.impureUseNativeOptimizations super.stdenv;
-        # gcc = super.gcc10;
-      })
-
       (import (builtins.fetchTarball {
-        url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+        url =
+          "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
       }))
     ];
   };
-  
+
   home = {
     username = "fabian";
     homeDirectory = "/home/fabian";
@@ -29,47 +25,58 @@
 
     packages = with pkgs;
       let
-        llvm = llvmPackages_11;
+        llvm = llvmPackages_12;
         pythonPackages = python39Packages;
-        communications = [ discord tdesktop ];
+        communications = [ tdesktop ];
         extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
-          # agda agda-pkg
-          ghc haskellPackages.apply-refact cabal-install
-          nix-linter nixpkgs-lint
+          agda
+          agda-pkg
+          ghc
+          cabal-install
+          nixpkgs-lint
+          nixfmt
+          nix-linter
+          racket
           sbcl
+          (scala.override { jre = openjdk11; })
+          (mill.override { jre = openjdk11; })
         ];
-        gaming = [ lutris wine-staging ];
         imperative = [
-          llvm.clang
+          llvm.clang # llvm.bintools
           crystal
           nasm
           nim
           nodejs
+          openjdk11
           perl
           pythonPackages.python
           ruby
-          rustup rust-analyzer
-          scala
+          rustup
+          rust-analyzer
         ];
-        lisps = [
-          chez
+        lisps = [ chez ];
+        math = [
+          # sage
         ];
-        media = [ calibre celluloid darktable shotwell];
+        media = [ audacity calibre celluloid darktable digikam gimp shotwell ];
         spell = [ aspell aspellDicts.en aspellDicts.es ];
-        tools = [ bind llvm.bintools cmake ripgrep tree youtube-dl zeal ];
-        vc = [ darcs git git-lfs pijul ];
-      in
-        communications ++ extensions ++ functional ++ gaming ++ imperative ++
-          lisps ++ media ++ spell ++ tools ++ vc;
+        tools = [ bind cmake ripgrep tree youtube-dl zeal ];
+
+        vc = [ git git-lfs ];
+      in communications ++ extensions ++ functional ++ imperative ++ lisps
+      ++ math ++ media ++ spell ++ tools ++ vc;
   };
 
-  dconf.settings."org/gnome/shell".enabled-extensions = with pkgs.gnomeExtensions; [
-    "backslide@codeisland.org"
-    "CoverflowAltTab@dmo60.de"
-    "freon@UshakovVasilii_Github.yahoo.com"
-    gsconnect.uuid
-  ];
+  dconf.settings."org/gnome/shell".enabled-extensions =
+    with pkgs.gnomeExtensions; [
+      "backslide@codeisland.org"
+      "CoverflowAltTab@palatis.blogspot.com"
+      "freon@UshakovVasilii_Github.yahoo.com"
+      gsconnect.uuid
+      "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
+      "vertical-overview@RensAlthuis.github.com"
+    ];
 
   programs = {
     bat.enable = true;
@@ -77,54 +84,15 @@
 
     emacs = {
       enable = true;
-      # package = pkgs.emacsGcc.override { nativeComp = true; };
-      extraPackages =  epkgs: with epkgs;
-        [
-          # General
-          async
-          buttercup
-          company company-lsp
-          dash
-          doom-modeline
-          dumb-jump
-          emojify
-          evil
-          flycheck
-          flx
-          general
-          helm helm-projectile
-          helpful
-          lsp-mode lsp-ui lsp-treemacs
-          magit forge
-          paredit
-          pdf-tools
-          polymode
-          popup
-          projectile
-          proof-general
-          org orgit org-journal org-noter org-projectile org-roam
-          smartparens
-          swiper
-          tablist
-          transient
-          treemacs treemacs-projectile
+      package = pkgs.emacsGcc.override { nativeComp = true; };
+      extraPackages = epkgs:
+        with epkgs; [
+          agda2-mode # Needs to be from same build as agda
           vterm
-          yasnippet
-          # Language Specific
-          # agda2-mode # Needs to be from same build as agda
-          cider
-          ess
-          markdown-mode
-          rtags
-          sly
-          tuareg
         ];
     };
 
-    firefox = {
-      enable = true;
-      enableGnomeExtensions = true;
-    };
+    firefox.enable = true;
     home-manager.enable = true;
   };
 

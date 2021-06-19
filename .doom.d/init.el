@@ -51,7 +51,7 @@
        (eval +overlay)     ; run code, run (also, repls)
        lookup              ; navigate your code and its documentation
        lsp
-       (magit +forge)             ; a git porcelain for Emacs
+       (magit)             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        (pass +auth)              ; password manager for nerds
        pdf               ; pdf enhancements
@@ -89,7 +89,7 @@
        ; Functional
        clojure           ; java with a lisp
        common-lisp       ; if you've seen one lisp, you've seen them all
-       elixir            ; erlang done right
+       ; elixir            ; erlang done right
        elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        erlang            ; an elegant language for a more civilized age
@@ -98,14 +98,14 @@
        ocaml             ; an objective camel
        purescript        ; javascript, but functional
        racket            ; a DSL for DSLs
-       scala             ; java, but good
+       (scala +lsp)      ; java, but good
        scheme            ; a fully conniving family of lisps
        sml
 
        ; Dependent
        agda              ; types of types of types of types...
        coq               ; proofs-as-programs
-       idris             ; a language you can depend on
+       ; idris             ; a language you can depend on
 
        :app
        (rss +org)        ; emacs as an RSS reader

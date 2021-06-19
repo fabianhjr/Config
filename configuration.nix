@@ -7,7 +7,14 @@
   # Nix
   #
 
-  nix.trustedUsers = [ "root" "@wheel" ];
+  nix = {
+    trustedUsers = [ "root" "@wheel" ];
+
+    # package = pkgs.nixUnstable;
+    # extraOptions = ''
+    #   experimental-features = nix-command flakes
+    # '';
+  };
 
   nixpkgs = {
     config = {
@@ -51,8 +58,8 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxPackages_latest_hardened;
-    kernel.sysctl."kernel.unprivileged_userns_clone" = true;
+    kernelPackages = pkgs.linuxPackages_5_12;
+    # kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
   security = {
@@ -62,11 +69,11 @@
 
   networking = {
     firewall = {
-      allowedTCPPorts = [      4001 8008 8010 8989 ];
+      allowedTCPPorts = [      4001 8000 8008 8010 8989 ];
       allowedTCPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
       ];
-      allowedUDPPorts = [ 1900 4001 8008 8010 8989 ];
+      allowedUDPPorts = [ 1900 4001 8000 8008 8010 8989 ];
       allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
       ];
@@ -80,23 +87,29 @@
   time.timeZone = "America/Mexico_City";
 
   # Cannot put in home.nix as it causes some config issues
-  programs.fish.enable = true;
+  programs = {
+    fish.enable = true;
+    steam.enable = true;
+  };
 
   services = {
     # Basic Services
-    dbus.packages = with pkgs; [ gnome3.dconf ];
+    dbus.packages = with pkgs; [ gnome.dconf ];
 
-    flatpak.enable = true;
-
-    gnome3 = {
+    gnome = {
       gnome-keyring.enable = true;
       gnome-online-accounts.enable = true;
     };
 
-    udev.packages = [ pkgs.libu2f-host pkgs.fuse ];
+    printing = {
+        enable = true;
+        drivers = with pkgs; [ gutenprint gutenprintBin ];
+    };
+
+    udev.packages = with pkgs; [ libu2f-host fuse ];
 
     xserver = {
-      desktopManager.gnome3.enable = true;
+      desktopManager.gnome.enable = true;
 
       displayManager.gdm = {
         enable = true;
@@ -118,7 +131,7 @@
             HighWater = 2000;
           };
           Transports.Network = {
-            TCP = false;
+            TCP = true;
             Websocket = false;
           };
         };
@@ -140,6 +153,8 @@
          host  all all    localhost trust
         ";
     };
+
+    redis.enable = true;
   };
 
   virtualisation = {
@@ -147,9 +162,9 @@
   };
 
   environment = {
-    gnome3.excludePackages = [ ]; 
+    gnome.excludePackages = [ ]; 
     systemPackages = with pkgs; [
-      gnome3.libgnome-keyring
+      gnome.libgnome-keyring
       # To keey in sync with the daemon version
       keybase
       keybase-gui
