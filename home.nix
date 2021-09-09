@@ -73,7 +73,7 @@
       "backslide@codeisland.org"
       "CoverflowAltTab@palatis.blogspot.com"
       "freon@UshakovVasilii_Github.yahoo.com"
-      gsconnect.uuid
+      gsconnect.extensionUuid
       "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
       "vertical-overview@RensAlthuis.github.com"
     ];

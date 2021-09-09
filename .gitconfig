@@ -15,6 +15,7 @@
 	defaultBranch = main
 [merge]
 	conflictStyle = diff3
+	renamelimit   = 10000
 [pull]
 	rebase = true
 [push]

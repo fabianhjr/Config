@@ -58,7 +58,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxPackages_5_12;
+    kernelPackages = pkgs.linuxPackages_5_14;
     # kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
@@ -101,10 +101,10 @@
       gnome-online-accounts.enable = true;
     };
 
-    printing = {
-        enable = true;
-        drivers = with pkgs; [ gutenprint gutenprintBin ];
-    };
+    # printing = {
+    #     enable = true;
+    #     drivers = with pkgs; [ gutenprint gutenprintBin ];
+    # };
 
     udev.packages = with pkgs; [ libu2f-host fuse ];
 

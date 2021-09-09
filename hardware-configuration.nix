@@ -17,7 +17,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     # nvidiaPersistenced = true;
-    # package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
