@@ -33,6 +33,10 @@
           agda
           agda-pkg
           ghc
+          (gradleGen.override {
+            jdk = openjdk11;
+            java = openjdk11;
+          }).gradle_latest
           cabal-install
           nixpkgs-lint
           nixfmt

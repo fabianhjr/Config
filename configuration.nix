@@ -59,6 +59,7 @@
     };
 
     kernelPackages = pkgs.linuxPackages_5_14;
+    kernelModules = [ "dm-raid" ]
     # kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
