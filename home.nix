@@ -10,10 +10,11 @@
     };
 
     overlays = [
-      (import (builtins.fetchTarball {
-        url =
-          "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      }))
+      (self: super:
+        {
+          # too expensive
+          # stdenv = super.impureUseNativeOptimizations super.stdenv;
+        })
     ];
   };
 
@@ -25,51 +26,63 @@
 
     packages = with pkgs;
       let
-        llvm = llvmPackages_12;
-        pythonPackages = python39Packages;
-        communications = [ tdesktop ];
+        communications = [ discord fractal ssb-patchwork tdesktop ];
         extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
-          agda
-          agda-pkg
+          # agda
+          # agda-pkg
+          chez
           ghc
           (gradleGen.override {
             jdk = openjdk11;
             java = openjdk11;
           }).gradle_latest
           cabal-install
+          kotlin
+          metals
+          (mill.override { jre = openjdk11; })
           nixpkgs-lint
           nixfmt
           nix-linter
           racket
           sbcl
           (scala.override { jre = openjdk11; })
-          (mill.override { jre = openjdk11; })
         ];
-        imperative = [
-          llvm.clang # llvm.bintools
-          crystal
-          nasm
-          nim
-          nodejs
-          openjdk11
-          perl
-          pythonPackages.python
-          ruby
-          rustup
-          rust-analyzer
-        ];
-        lisps = [ chez ];
+        imperative =
+          [ crystal nodejs openjdk11 perl python ruby rustup rust-analyzer ];
         math = [
           # sage
         ];
-        media = [ audacity calibre celluloid darktable digikam gimp shotwell ];
+        media = [
+          calibre
+          celluloid
+          darktable
+          digikam
+          ffmpeg-full
+          gimp
+          vlc
+        ];
         spell = [ aspell aspellDicts.en aspellDicts.es ];
-        tools = [ bind cmake ripgrep tree youtube-dl zeal ];
+        tools = [
+          androidStudioPackages.stable
+          androidStudioPackages.beta
+          bind
+          cmake
+          dbeaver
+          dbmate
+          direnv
+          gnupg
+          jetbrains.idea-community
+          postgresql_13
+          ripgrep
+          tree
+          youtube-dl
+          zeal
+        ];
 
         vc = [ git git-lfs ];
-      in communications ++ extensions ++ functional ++ imperative ++ lisps
-      ++ math ++ media ++ spell ++ tools ++ vc;
+      in communications ++ extensions ++ functional ++ imperative ++ math
+      ++ media ++ spell ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions =
@@ -88,10 +101,10 @@
 
     emacs = {
       enable = true;
-      package = pkgs.emacsGcc.override { nativeComp = true; };
       extraPackages = epkgs:
-        with epkgs; [
-          agda2-mode # Needs to be from same build as agda
+        with epkgs;
+        [
+          # agda2-mode # Needs to be from same build as agda
           vterm
         ];
     };

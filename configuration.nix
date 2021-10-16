@@ -10,10 +10,10 @@
   nix = {
     trustedUsers = [ "root" "@wheel" ];
 
-    # package = pkgs.nixUnstable;
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes
-    # '';
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 
   nixpkgs = {
@@ -59,7 +59,6 @@
     };
 
     kernelPackages = pkgs.linuxPackages_5_14;
-    kernelModules = [ "dm-raid" ]
     # kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
@@ -146,6 +145,7 @@
 
     postgresql = {
       enable = true;
+      package = pkgs.postgresql_13;
       authentication =
         "
          local all all              trust

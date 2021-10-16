@@ -24,7 +24,7 @@
 
   boot.initrd = {
     availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-    kernelModules = [ "dm-snapshot" ];
+    kernelModules = [ "dm_raid" "dm-snapshot" ];
     luks.devices = {
       lvm = {
         device = "/dev/nvme0n1p2";
