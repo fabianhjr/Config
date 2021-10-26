@@ -7,6 +7,12 @@
 
       gcc.arch = "znver2";
       gcc.tune = "znver2";
+
+      packageOverrides = pkgs: {
+        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+          inherit pkgs;
+        };
+      };
     };
 
     overlays = [
@@ -26,11 +32,17 @@
 
     packages = with pkgs;
       let
-        communications = [ discord fractal ssb-patchwork tdesktop ];
+        ltsJava = openjdk11;
+        communications = [
+          discord
+          fractal
+          ssb-patchwork
+          tdesktop
+        ];
         extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
-          # agda
-          # agda-pkg
+          agda
+          agda-pkg
           chez
           ghc
           (gradleGen.override {
@@ -39,17 +51,25 @@
           }).gradle_latest
           cabal-install
           kotlin
-          metals
-          (mill.override { jre = openjdk11; })
+          (metals.override { jdk = ltsJava; jre = ltsJava; })
+          (mill.override { jre = ltsJava; })
           nixpkgs-lint
           nixfmt
           nix-linter
           racket
           sbcl
-          (scala.override { jre = openjdk11; })
+          (scala.override { jre = ltsJava; })
         ];
-        imperative =
-          [ crystal nodejs openjdk11 perl python ruby rustup rust-analyzer ];
+        imperative = [
+          crystal
+          nodejs
+          ltsJava
+          perl
+          python3
+          ruby
+          rustup
+          rust-analyzer
+        ];
         math = [
           # sage
         ];
@@ -60,9 +80,12 @@
           digikam
           ffmpeg-full
           gimp
+          mpv
+          nur.repos.wolfangaukang.vdhcoapp
+          rhythmbox
           vlc
         ];
-        spell = [ aspell aspellDicts.en aspellDicts.es ];
+        spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
         tools = [
           androidStudioPackages.stable
           androidStudioPackages.beta
@@ -75,20 +98,20 @@
           jetbrains.idea-community
           postgresql_13
           ripgrep
+          sqlite
           tree
           youtube-dl
           zeal
         ];
-
-        vc = [ git git-lfs ];
-      in communications ++ extensions ++ functional ++ imperative ++ math
-      ++ media ++ spell ++ tools ++ vc;
+        vc = [ git git-lfs pijul ];
+      in communications ++ extensions ++ functional ++ imperative ++ math ++
+         media ++ spell ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions =
     with pkgs.gnomeExtensions; [
       "backslide@codeisland.org"
-      "CoverflowAltTab@palatis.blogspot.com"
+      "CoverflowAltTab@dmo60.de"
       "freon@UshakovVasilii_Github.yahoo.com"
       gsconnect.extensionUuid
       "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
@@ -104,7 +127,7 @@
       extraPackages = epkgs:
         with epkgs;
         [
-          # agda2-mode # Needs to be from same build as agda
+          agda2-mode # Needs to be from same build as agda
           vterm
         ];
     };
