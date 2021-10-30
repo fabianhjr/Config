@@ -78,7 +78,7 @@
        java ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        julia             ; a better, faster MATLAB
-       kotlin            ; a better, slicker Java(Script)
+       (kotlin +lsp)     ; a better, slicker Java(Script)
        lua               ; one-based indices? one-based indices
        nim               ; python + lisp at the speed of c
        python            ; beautiful is better than ugly

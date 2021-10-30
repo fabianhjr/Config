@@ -44,6 +44,7 @@
           agda
           agda-pkg
           chez
+          (dotty.override { jre = ltsJava; })
           ghc
           (gradleGen.override {
             jdk = openjdk11;
@@ -51,14 +52,15 @@
           }).gradle_latest
           cabal-install
           kotlin
-          (metals.override { jdk = ltsJava; jre = ltsJava; })
+          # kotlin-native
+          metals
           (mill.override { jre = ltsJava; })
           nixpkgs-lint
           nixfmt
           nix-linter
           racket
           sbcl
-          (scala.override { jre = ltsJava; })
+          scalafmt
         ];
         imperative = [
           crystal
@@ -97,9 +99,11 @@
           gnupg
           jetbrains.idea-community
           postgresql_13
+          protontricks
           ripgrep
           sqlite
           tree
+          winetricks
           youtube-dl
           zeal
         ];
