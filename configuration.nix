@@ -58,8 +58,16 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxPackages_5_14;
-    # kernel.sysctl."kernel.unprivileged_userns_clone" = true;
+    kernelPackages = pkgs.linuxPackages_5_14_hardened;
+    kernel.sysctl."kernel.unprivileged_userns_clone" = true;
+
+    blacklistedKernelModules = [
+      "i2c_piix4"
+      "mac_hid"
+      "mousedev"
+      "sp5100_tco"
+      "snd_seq_dummy"
+    ];
   };
 
   security = {

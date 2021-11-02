@@ -1,21 +1,21 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq-default indent-tabs-mode t)
-
 (setq user-full-name "Fabián Heredia Montiel"
       user-mail-address "fabianhjr@protonmail.com")
 
 (setq doom-theme 'badwolf)
 (setq display-line-numbers-type t)
 
+(setq-default indent-tabs-mode t)
 (setq exec-path (append exec-path '("/home/fabian/.local/bin")))
 
 (setq org-directory "~/Documents/PersonalKnowledgeBase/")
-(setq org-agenda-files "~/Documents/PersonalKnowledgeBase/Agenda.org")
-(setq org-roam-directory org-directory)
 
-(after! elfeed
-  (setq elfeed-search-filter "@1-year-ago +unread"))
+(setq org-agenda-files "~/Documents/PersonalKnowledgeBase/Agenda.org")
+
+(setq org-roam-complete-everywhere t)
+(setq org-roam-directory org-directory)
+(setq org-roam-dailies-directory "Journal/")
 
 (use-package! idris-mode
   :mode ("\\.l?idr\\'" . idris-mode)
