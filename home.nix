@@ -9,9 +9,10 @@
       gcc.tune = "znver2";
 
       packageOverrides = pkgs: {
-        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-          inherit pkgs;
-        };
+        nur = import (builtins.fetchTarball
+          "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+            inherit pkgs;
+          };
       };
     };
 
@@ -33,16 +34,11 @@
     packages = with pkgs;
       let
         ltsJava = openjdk11;
-        communications = [
-          discord
-          fractal
-          ssb-patchwork
-          tdesktop
-        ];
+        communications = [ discord fractal ssb-patchwork tdesktop ];
         extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
-          agda
-          agda-pkg
+          # agda
+          # agda-pkg
           chez
           (dotty.override { jre = ltsJava; })
           ghc
@@ -50,27 +46,20 @@
             jdk = openjdk11;
             java = openjdk11;
           }).gradle_latest
-          cabal-install
           kotlin
-          # kotlin-native
+          kotlin-native
           metals
           (mill.override { jre = ltsJava; })
-          nixpkgs-lint
-          nixfmt
-          nix-linter
           racket
           sbcl
           scalafmt
         ];
         imperative = [
-          crystal
           nodejs
           ltsJava
-          perl
-          python3
-          ruby
-          rustup
-          rust-analyzer
+          python310
+          python39Packages.mypy
+          python39Packages.pytest
         ];
         math = [
           # sage
@@ -89,7 +78,6 @@
         ];
         spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
         tools = [
-          androidStudioPackages.stable
           androidStudioPackages.beta
           bind
           cmake
@@ -98,18 +86,19 @@
           direnv
           gnupg
           jetbrains.idea-community
+          nix-linter
+          nixpkgs-lint
           postgresql_13
           protontricks
           ripgrep
           sqlite
           tree
           winetricks
-          youtube-dl
           zeal
         ];
         vc = [ git git-lfs pijul ];
-      in communications ++ extensions ++ functional ++ imperative ++ math ++
-         media ++ spell ++ tools ++ vc;
+      in communications ++ extensions ++ functional ++ imperative ++ math
+      ++ media ++ spell ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions =
@@ -129,9 +118,8 @@
     emacs = {
       enable = true;
       extraPackages = epkgs:
-        with epkgs;
-        [
-          agda2-mode # Needs to be from same build as agda
+        with epkgs; [
+          # agda2-mode # Needs to be from same build as agda
           vterm
         ];
     };

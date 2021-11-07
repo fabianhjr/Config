@@ -9,9 +9,9 @@
 (setq-default indent-tabs-mode t)
 (setq exec-path (append exec-path '("/home/fabian/.local/bin")))
 
-(setq org-directory "~/Documents/PersonalKnowledgeBase/")
+(setq org-directory "~/Documents/PersonajSciobazo/")
 
-(setq org-agenda-files "~/Documents/PersonalKnowledgeBase/Agenda.org")
+(setq org-agenda-files "~/Documents/PersonajSciobazo/Agenda.org")
 
 (setq org-roam-complete-everywhere t)
 (setq org-roam-directory org-directory)

@@ -27,7 +27,7 @@
     })];
   };
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 
   #
   # General Hardware
@@ -58,16 +58,8 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxPackages_5_14_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
-
-    blacklistedKernelModules = [
-      "i2c_piix4"
-      "mac_hid"
-      "mousedev"
-      "sp5100_tco"
-      "snd_seq_dummy"
-    ];
   };
 
   security = {
@@ -162,8 +154,6 @@
          host  all all    localhost trust
         ";
     };
-
-    redis.enable = true;
   };
 
   virtualisation = {
