@@ -18,9 +18,15 @@
     modesetting.enable = true;
     # nvidiaPersistenced = true;
     # package = config.boot.kernelPackages.nvidiaPackages.beta;
+    powerManagement.enable = true;
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+    screenSection = ''
+      Option "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
+    '';
+  };
 
   boot.initrd = {
     availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];

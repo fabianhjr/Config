@@ -70,6 +70,7 @@
           darktable
           digikam
           ffmpeg-full
+          fira-code
           gimp
           mpv
           nur.repos.wolfangaukang.vdhcoapp
@@ -84,7 +85,9 @@
           dbeaver
           dbmate
           direnv
+          gh
           gnupg
+          google-cloud-sdk
           jetbrains.idea-community
           nix-linter
           nixpkgs-lint
