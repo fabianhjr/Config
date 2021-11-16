@@ -39,9 +39,10 @@
         functional = [
           # agda
           # agda-pkg
+          cabal-install
           chez
           (dotty.override { jre = ltsJava; })
-          ghc
+          haskell.compiler.ghc921
           (gradleGen.override {
             jdk = openjdk11;
             java = openjdk11;
@@ -85,10 +86,14 @@
           dbeaver
           dbmate
           direnv
+          exercism
+          gettext
           gh
           gnupg
           google-cloud-sdk
           jetbrains.idea-community
+          kubectl
+          kubernetes-helm
           nix-linter
           nixpkgs-lint
           postgresql_13
@@ -96,6 +101,7 @@
           ripgrep
           sqlite
           tree
+          vim
           winetricks
           zeal
         ];
