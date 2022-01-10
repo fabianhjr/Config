@@ -22,6 +22,10 @@
           # too expensive
           # stdenv = super.impureUseNativeOptimizations super.stdenv;
         })
+
+      (import (builtins.fetchTarball {
+        url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      }))
     ];
   };
 
@@ -37,16 +41,14 @@
         communications = [ discord fractal ssb-patchwork tdesktop ];
         extensions = with gnomeExtensions; [ gsconnect ];
         functional = [
-          # agda
-          # agda-pkg
+          agda
+          agda-pkg
           cabal-install
           chez
           (dotty.override { jre = ltsJava; })
           haskell.compiler.ghc921
-          (gradleGen.override {
-            jdk = openjdk11;
-            java = openjdk11;
-          }).gradle_latest
+          # (haskell-language-server.override { supportedGhcVersions = [ "901" "921" ]; })
+          gradle_7
           kotlin
           kotlin-native
           metals
@@ -100,6 +102,7 @@
           protontricks
           ripgrep
           sqlite
+          stack
           tree
           vim
           winetricks
@@ -126,9 +129,10 @@
 
     emacs = {
       enable = true;
+      package = pkgs.emacsPgtkGcc;
       extraPackages = epkgs:
         with epkgs; [
-          # agda2-mode # Needs to be from same build as agda
+          agda2-mode # Needs to be from same build as agda
           vterm
         ];
     };

@@ -17,7 +17,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     # nvidiaPersistenced = true;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
+    # package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
     powerManagement.enable = true;
   };
 

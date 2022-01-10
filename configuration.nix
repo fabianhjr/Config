@@ -10,7 +10,7 @@
   nix = {
     trustedUsers = [ "root" "@wheel" ];
 
-    package = pkgs.nix_2_4;
+    package = pkgs.nix_2_5;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -58,7 +58,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
+    kernelPackages = pkgs.linuxKernel.packages.linux_5_16; # _hardened;
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 

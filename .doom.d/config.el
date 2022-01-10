@@ -4,9 +4,11 @@
       user-mail-address "fabianhjr@protonmail.com")
 
 (setq doom-theme 'badwolf)
-(setq display-line-numbers-type t)
+(setq doom-font (font-spec :family "FiraCode" :size 21))
 
+(setq display-line-numbers-type t)
 (setq-default indent-tabs-mode t)
+
 (setq exec-path (append exec-path '("/home/fabian/.local/bin")))
 
 (setq org-directory "~/Documents/PersonajSciobazo/")

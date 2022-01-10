@@ -93,7 +93,7 @@
        elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        erlang            ; an elegant language for a more civilized age
-       (haskell +dante)  ; a language that's lazier than I am
+       (haskell +lsp)  ; a language that's lazier than I am
        nix               ; I hereby declare "nix geht mehr!"
        ocaml             ; an objective camel
        purescript        ; javascript, but functional
