@@ -24,7 +24,8 @@
         })
 
       (import (builtins.fetchTarball {
-        url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+        # 4075922d23e44a2b4c73e8c08f8b008ec6391ef2 is from 2022-01-20
+        url = https://github.com/nix-community/emacs-overlay/archive/4075922d23e44a2b4c73e8c08f8b008ec6391ef2.tar.gz;
       }))
     ];
   };
@@ -55,14 +56,20 @@
           (mill.override { jre = ltsJava; })
           racket
           sbcl
+          sbt
           scalafmt
         ];
         imperative = [
           nodejs
           ltsJava
-          python310
-          python39Packages.mypy
-          python39Packages.pytest
+          (python310.withPackages (ps: with ps; [
+            build
+            mypy
+            pip
+            pytest
+            pytest-cov
+            setuptools
+          ]))
         ];
         math = [
           # sage
@@ -94,12 +101,17 @@
           gnupg
           google-cloud-sdk
           jetbrains.idea-community
+          jq
           kubectl
           kubernetes-helm
+          librsvg
+          lm_sensors
           nix-linter
           nixpkgs-lint
+          pass
           postgresql_13
           protontricks
+          qbittorrent
           ripgrep
           sqlite
           stack

@@ -94,7 +94,7 @@
 
   services = {
     # Basic Services
-    dbus.packages = with pkgs; [ gnome.dconf ];
+    dbus.packages = with pkgs; [ dconf ];
 
     gnome = {
       gnome-keyring.enable = true;
