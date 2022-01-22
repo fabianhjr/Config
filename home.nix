@@ -24,8 +24,8 @@
         })
 
       (import (builtins.fetchTarball {
-        # 4075922d23e44a2b4c73e8c08f8b008ec6391ef2 is from 2022-01-20
-        url = https://github.com/nix-community/emacs-overlay/archive/4075922d23e44a2b4c73e8c08f8b008ec6391ef2.tar.gz;
+        # fb895f4df8e984cf8dd9c587b87d921416dcd6c5 is from 2022-01-22
+        url = https://github.com/nix-community/emacs-overlay/archive/fb895f4df8e984cf8dd9c587b87d921416dcd6c5.tar.gz;
       }))
     ];
   };
@@ -51,6 +51,7 @@
           # (haskell-language-server.override { supportedGhcVersions = [ "901" "921" ]; })
           gradle_7
           kotlin
+          kotlin-language-server
           kotlin-native
           metals
           (mill.override { jre = ltsJava; })
