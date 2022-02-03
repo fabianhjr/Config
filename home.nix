@@ -24,8 +24,8 @@
         })
 
       (import (builtins.fetchTarball {
-        # fb895f4df8e984cf8dd9c587b87d921416dcd6c5 is from 2022-01-22
-        url = https://github.com/nix-community/emacs-overlay/archive/fb895f4df8e984cf8dd9c587b87d921416dcd6c5.tar.gz;
+        # 05bb95f4cdcd14359e6339f0a44b05878aa59481 is from 2022-02-03
+        url = https://github.com/nix-community/emacs-overlay/archive/a274c9d17d5e57b37a17135603e998b4ffcc6cf7.tar.gz;
       }))
     ];
   };
@@ -53,6 +53,7 @@
           kotlin
           kotlin-language-server
           kotlin-native
+          ktlint
           metals
           (mill.override { jre = ltsJava; })
           racket

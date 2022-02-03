@@ -17,7 +17,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     # nvidiaPersistenced = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
     powerManagement.enable = true;
   };
 
@@ -60,5 +60,5 @@
     { device = "/dev/disk/by-uuid/7f4f1bd5-6012-4ac5-8256-a4b0979539c1"; }
   ];
 
-  nix.maxJobs = lib.mkDefault 16;
+  nix.settings.max-jobs = lib.mkDefault 16;
 }

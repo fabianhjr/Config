@@ -8,9 +8,8 @@
   #
 
   nix = {
-    trustedUsers = [ "root" "@wheel" ];
+    settings.trusted-users = [ "root" "@wheel" ];
 
-    package = pkgs.nix_2_5;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -113,7 +112,6 @@
 
       displayManager.gdm = {
         enable = true;
-        nvidiaWayland = true;
       };
 
       enable = true;
