@@ -8,7 +8,9 @@
   #
 
   nix = {
-    settings.trusted-users = [ "root" "@wheel" ];
+    settings = {
+      trusted-users = [ "root" "@wheel" ];
+    };
 
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -33,7 +35,10 @@
   #
 
   hardware = {
-    opengl.driSupport32Bit = true;
+    opengl = {
+      driSupport32Bit = true;
+      setLdLibraryPath = true;
+    };
 
     pulseaudio = {
       enable = true;
@@ -125,8 +130,8 @@
       extraConfig = {
         Swarm = {
           ConnMgr = {
-            LowWater = 1000;
-            HighWater = 2000;
+            LowWater = 500;
+            HighWater = 1000;
           };
           Transports.Network = {
             TCP = true;

@@ -24,8 +24,8 @@
         })
 
       (import (builtins.fetchTarball {
-        # 05bb95f4cdcd14359e6339f0a44b05878aa59481 is from 2022-02-03
-        url = https://github.com/nix-community/emacs-overlay/archive/a274c9d17d5e57b37a17135603e998b4ffcc6cf7.tar.gz;
+        # From 2022-03-14
+        url = https://github.com/nix-community/emacs-overlay/archive/0985a6dfa8918641e7c0bc7d86254c46bc103d2a.tar.gz;
       }))
     ];
   };
@@ -80,19 +80,24 @@
           calibre
           celluloid
           darktable
-          digikam
+          # digikam
           ffmpeg-full
           fira-code
           gimp
+          inkscape
+          kdenlive
           mpv
           nur.repos.wolfangaukang.vdhcoapp
+          pandoc
           rhythmbox
+          texlive.combined.scheme-full
           vlc
         ];
         spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
         tools = [
           androidStudioPackages.beta
           bind
+          colmapWithCuda
           cmake
           dbeaver
           dbmate
@@ -106,10 +111,12 @@
           jq
           kubectl
           kubernetes-helm
+          libreoffice
           librsvg
           lm_sensors
           nix-linter
           nixpkgs-lint
+          python310Packages.opensfm
           pass
           postgresql_13
           protontricks
@@ -119,6 +126,7 @@
           stack
           tree
           vim
+          visualvm
           winetricks
           zeal
         ];
