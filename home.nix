@@ -24,8 +24,8 @@
         })
 
       (import (builtins.fetchTarball {
-        # From 2022-03-14
-        url = https://github.com/nix-community/emacs-overlay/archive/0985a6dfa8918641e7c0bc7d86254c46bc103d2a.tar.gz;
+        # From 2022-03-21
+        url = https://github.com/nix-community/emacs-overlay/archive/023ce0b1e29732c6d26a380ad5dc8298c298f99b.tar.gz;
       }))
     ];
   };
@@ -47,8 +47,8 @@
           cabal-install
           chez
           (dotty.override { jre = ltsJava; })
-          haskell.compiler.ghc921
-          # (haskell-language-server.override { supportedGhcVersions = [ "901" "921" ]; })
+          haskell.compiler.ghc922
+          # (haskell-language-server.override { supportedGhcVersions = [ "902" "922" ]; })
           gradle_7
           kotlin
           kotlin-language-server
@@ -80,11 +80,11 @@
           calibre
           celluloid
           darktable
-          # digikam
+          digikam
           ffmpeg-full
           fira-code
           gimp
-          inkscape
+          # inkscape
           kdenlive
           mpv
           nur.repos.wolfangaukang.vdhcoapp
@@ -111,12 +111,11 @@
           jq
           kubectl
           kubernetes-helm
-          libreoffice
+          # libreoffice
           librsvg
           lm_sensors
           nix-linter
           nixpkgs-lint
-          python310Packages.opensfm
           pass
           postgresql_13
           protontricks

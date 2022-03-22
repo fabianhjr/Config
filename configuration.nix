@@ -39,12 +39,6 @@
       driSupport32Bit = true;
       setLdLibraryPath = true;
     };
-
-    pulseaudio = {
-      enable = true;
-      package = pkgs.pulseaudioFull;
-      support32Bit = true;
-    };
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
@@ -62,13 +56,14 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_16; # _hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_5_17; # _hardened;
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
   security = {
     allowUserNamespaces = true;
     apparmor.enable = true;
+    rtkit.enable = true;
   };
 
   networking = {
@@ -98,6 +93,7 @@
 
   services = {
     # Basic Services
+
     dbus.packages = with pkgs; [ dconf ];
 
     gnome = {
@@ -105,10 +101,12 @@
       gnome-online-accounts.enable = true;
     };
 
-    # printing = {
-    #     enable = true;
-    #     drivers = with pkgs; [ gutenprint gutenprintBin ];
-    # };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
 
     udev.packages = with pkgs; [ libu2f-host fuse ];
 
@@ -123,6 +121,8 @@
       layout = "us";
       xkbVariant = "dvorak-intl";
     };
+
+    # EXTRA
 
     ipfs = {
       enable   = true;

@@ -39,6 +39,8 @@
     };
   };
   boot.kernelModules = [ "kvm-amd" ];
+  boot.loader.grub.memtest86.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
