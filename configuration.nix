@@ -28,7 +28,10 @@
     })];
   };
 
-  system.stateVersion = "21.05";
+  system = {
+    stateVersion = "22.05";
+    replaceRuntimeDependencies = [];
+  };
 
   #
   # General Hardware
@@ -39,6 +42,7 @@
       driSupport32Bit = true;
       setLdLibraryPath = true;
     };
+    pulseaudio.enable = false;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";

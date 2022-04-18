@@ -108,7 +108,7 @@
        ; idris             ; a language you can depend on
 
        :app
-       (rss +org)        ; emacs as an RSS reader
+       ; (rss +org)        ; emacs as an RSS reader
 
        :config
        (default +bindings +smartparens))

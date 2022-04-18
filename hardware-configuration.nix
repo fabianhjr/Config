@@ -28,20 +28,23 @@
     '';
   };
 
-  boot.initrd = {
-    availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-    kernelModules = [ "dm_raid" "dm-snapshot" ];
-    luks.devices = {
-      lvm = {
-        device = "/dev/nvme0n1p2";
-        preLVM = true;
+  boot = {
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ "dm_raid" "dm-snapshot" ];
+      luks.devices = {
+        lvm = {
+          device = "/dev/nvme0n1p2";
+          preLVM = true;
+        };
       };
     };
+    kernelModules = [ "kvm-amd" ];
+    blacklistedKernelModules = [ "acpi_cpufreq_init" ];
+    loader.grub.memtest86.enable = true;
+    loader.systemd-boot.memtest86.enable = true;
+    extraModulePackages = [ ];
   };
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.loader.grub.memtest86.enable = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
-  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/41ab814d-ffd3-4ffd-b1a9-e4f7d4c73a91";
@@ -62,5 +65,5 @@
     { device = "/dev/disk/by-uuid/7f4f1bd5-6012-4ac5-8256-a4b0979539c1"; }
   ];
 
-  nix.settings.max-jobs = lib.mkDefault 16;
+  nix.settings.max-jobs = lib.mkDefault 4;
 }

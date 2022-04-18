@@ -23,9 +23,9 @@
           # stdenv = super.impureUseNativeOptimizations super.stdenv;
         })
 
+      # 2022-04-15
       (import (builtins.fetchTarball {
-        # From 2022-03-21
-        url = https://github.com/nix-community/emacs-overlay/archive/023ce0b1e29732c6d26a380ad5dc8298c298f99b.tar.gz;
+        url = https://github.com/nix-community/emacs-overlay/archive/d0ef2cfa729bab6adacf6461d48a4fb83618c047.tar.gz;
       }))
     ];
   };
@@ -34,13 +34,13 @@
     username = "fabian";
     homeDirectory = "/home/fabian";
 
-    stateVersion = "21.03";
+    stateVersion = "22.05";
 
     packages = with pkgs;
       let
         ltsJava = openjdk11;
         communications = [ discord fractal ssb-patchwork tdesktop ];
-        extensions = with gnomeExtensions; [ gsconnect ];
+        extensions = with gnomeExtensions; [ freon gsconnect ];
         functional = [
           agda
           agda-pkg
@@ -80,24 +80,24 @@
           calibre
           celluloid
           darktable
-          digikam
+          # digikam
           ffmpeg-full
           fira-code
           gimp
-          # inkscape
+          inkscape
           kdenlive
           mpv
           nur.repos.wolfangaukang.vdhcoapp
           pandoc
           rhythmbox
-          texlive.combined.scheme-full
+          texlive.combined.scheme-medium
           vlc
-        ];
-        spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
-        tools = [
+	];
+	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
+	tools = [
           androidStudioPackages.beta
           bind
-          colmapWithCuda
+          # colmapWithCuda
           cmake
           dbeaver
           dbmate
@@ -105,13 +105,14 @@
           exercism
           gettext
           gh
+          gnome.gnome-tweaks
           gnupg
           google-cloud-sdk
           jetbrains.idea-community
           jq
           kubectl
           kubernetes-helm
-          # libreoffice
+          libreoffice
           librsvg
           lm_sensors
           nix-linter
@@ -138,7 +139,7 @@
     with pkgs.gnomeExtensions; [
       "backslide@codeisland.org"
       "CoverflowAltTab@dmo60.de"
-      "freon@UshakovVasilii_Github.yahoo.com"
+      freon.extensionUuid
       gsconnect.extensionUuid
       "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
       "vertical-overview@RensAlthuis.github.com"
@@ -158,7 +159,10 @@
         ];
     };
 
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+    };
+
     home-manager.enable = true;
   };
 
