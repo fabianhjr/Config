@@ -23,9 +23,9 @@
           # stdenv = super.impureUseNativeOptimizations super.stdenv;
         })
 
-      # 2022-04-15
+      # 2022-07-24
       (import (builtins.fetchTarball {
-        url = https://github.com/nix-community/emacs-overlay/archive/d0ef2cfa729bab6adacf6461d48a4fb83618c047.tar.gz;
+        url = https://github.com/nix-community/emacs-overlay/archive/8105f0f88edf635dbe97dc3b40984b90b2e76029.tar.gz;
       }))
     ];
   };
@@ -42,13 +42,13 @@
         communications = [ discord fractal ssb-patchwork tdesktop ];
         extensions = with gnomeExtensions; [ freon gsconnect ];
         functional = [
-          agda
-          agda-pkg
+          # agda
+          # agda-pkg
           cabal-install
           chez
           (dotty.override { jre = ltsJava; })
-          haskell.compiler.ghc922
-          # (haskell-language-server.override { supportedGhcVersions = [ "902" "922" ]; })
+          haskell.compiler.ghc923
+          # (haskell-language-server.override { supportedGhcVersions = [ "902" "923" ]; })
           gradle_7
           kotlin
           kotlin-language-server
@@ -62,7 +62,8 @@
           scalafmt
         ];
         imperative = [
-          nodejs
+          gcc
+          nodejs-18_x
           ltsJava
           (python310.withPackages (ps: with ps; [
             build
@@ -80,7 +81,7 @@
           calibre
           celluloid
           darktable
-          # digikam
+          digikam
           ffmpeg-full
           fira-code
           gimp
@@ -95,7 +96,7 @@
 	];
 	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
 	tools = [
-          androidStudioPackages.beta
+          androidStudioPackages.canary
           bind
           # colmapWithCuda
           cmake
@@ -106,13 +107,14 @@
           gettext
           gh
           gnome.gnome-tweaks
+          gnumake
           gnupg
           google-cloud-sdk
           jetbrains.idea-community
           jq
           kubectl
           kubernetes-helm
-          libreoffice
+          # libreoffice
           librsvg
           lm_sensors
           nix-linter
@@ -121,6 +123,7 @@
           postgresql_13
           protontricks
           qbittorrent
+          recoll
           ripgrep
           sqlite
           stack
@@ -151,16 +154,21 @@
 
     emacs = {
       enable = true;
-      package = pkgs.emacsPgtkGcc;
+      package = pkgs.emacsPgtkNativeComp;
       extraPackages = epkgs:
         with epkgs; [
-          agda2-mode # Needs to be from same build as agda
+          # agda2-mode # Needs to be from same build as agda
           vterm
         ];
     };
 
     firefox = {
       enable = true;
+      package = pkgs.firefox.override {
+        cfg = {
+          enableGnomeExtensions = true;
+        };
+      };
     };
 
     home-manager.enable = true;

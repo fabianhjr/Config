@@ -60,7 +60,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_17; # _hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_5_18; # _hardened;
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
@@ -101,6 +101,7 @@
     dbus.packages = with pkgs; [ dconf ];
 
     gnome = {
+      chrome-gnome-shell.enable = true;
       gnome-keyring.enable = true;
       gnome-online-accounts.enable = true;
     };
@@ -134,8 +135,8 @@
       extraConfig = {
         Swarm = {
           ConnMgr = {
-            LowWater = 500;
-            HighWater = 1000;
+            LowWater = 1000;
+            HighWater = 2000;
           };
           Transports.Network = {
             TCP = true;

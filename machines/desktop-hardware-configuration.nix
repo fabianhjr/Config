@@ -8,27 +8,43 @@
 
   networking.hostName = "fabian-tower";
 
-  nixpkgs.localSystem = {
-    gcc.arch = "znver2";
-    gcc.tune = "znver2";
-    system = "x86_64-linux";
+  # nixpkgs.localSystem = {
+  #   gcc.arch = "znver2";
+  #   gcc.tune = "znver2";
+  #   system = "x86_64-linux";
+  # };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    # nvidiaPersistenced = true;
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
+    powerManagement.enable = true;
   };
 
-  hardware.nvidia.modesetting.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+    screenSection = ''
+      Option "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
+    '';
+  };
 
-  boot.initrd = {
-    availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-    kernelModules = [ "dm-snapshot" ];
-    luks.devices = {
-      lvm = {
-        device = "/dev/nvme0n1p2";
-        preLVM = true;
+  boot = {
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ "dm_raid" "dm-snapshot" ];
+      luks.devices = {
+        lvm = {
+          device = "/dev/nvme0n1p2";
+          preLVM = true;
+        };
       };
     };
+    kernelModules = [ "kvm-amd" ];
+    blacklistedKernelModules = [ "acpi_cpufreq_init" ];
+    loader.grub.memtest86.enable = true;
+    loader.systemd-boot.memtest86.enable = true;
+    extraModulePackages = [ ];
   };
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/41ab814d-ffd3-4ffd-b1a9-e4f7d4c73a91";
@@ -49,5 +65,5 @@
     { device = "/dev/disk/by-uuid/7f4f1bd5-6012-4ac5-8256-a4b0979539c1"; }
   ];
 
-  nix.maxJobs = lib.mkDefault 16;
+  nix.settings.max-jobs = lib.mkDefault 4;
 }

@@ -23,3 +23,7 @@ git.marks
 # Output Dirs
 
 .build/
+
+# Non-supported
+
+gradlew.bat # Windows gradle wrapper
