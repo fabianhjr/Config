@@ -4,16 +4,16 @@
       user-mail-address "fabianhjr@protonmail.com")
 
 (setq doom-theme 'badwolf)
-(setq doom-font (font-spec :family "FiraCode" :size 21))
+(setq doom-font (font-spec :family "FiraCode" :size 18))
 
 (setq display-line-numbers-type t)
 (setq-default indent-tabs-mode t)
 
 (setq exec-path (append exec-path '("/home/fabian/.local/bin")))
 
-(setq org-directory "~/Documents/PersonajSciobazo/")
+(setq org-directory "~/Documents/KnowledgeBase/")
 
-(setq org-agenda-files "~/Documents/PersonajSciobazo/Agenda.org")
+(setq org-agenda-files "~/Documents/KnowledgeBase/Agenda.org")
 
 (setq org-roam-complete-everywhere t)
 (setq org-roam-directory org-directory)

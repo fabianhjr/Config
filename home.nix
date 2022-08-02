@@ -23,9 +23,9 @@
           # stdenv = super.impureUseNativeOptimizations super.stdenv;
         })
 
-      # 2022-07-24
+      # 2022-08-01
       (import (builtins.fetchTarball {
-        url = https://github.com/nix-community/emacs-overlay/archive/8105f0f88edf635dbe97dc3b40984b90b2e76029.tar.gz;
+        url = https://github.com/nix-community/emacs-overlay/archive/e911c43b99c7b9c94ee408c38b0c6e2c6a01132e.tar.gz;
       }))
     ];
   };
