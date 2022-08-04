@@ -23,9 +23,10 @@
           # stdenv = super.impureUseNativeOptimizations super.stdenv;
         })
 
-      # 2022-08-01
+      # 2022-08-03
+      # Bad commit: ce91eb0560fd6e315cc245ee97c10baebdf2678e
       (import (builtins.fetchTarball {
-        url = https://github.com/nix-community/emacs-overlay/archive/e911c43b99c7b9c94ee408c38b0c6e2c6a01132e.tar.gz;
+        url = https://github.com/nix-community/emacs-overlay/archive/f4d60d03ea621634ab3091f2c7c036b6a4ad49c3.tar.gz;
       }))
     ];
   };
