@@ -179,5 +179,14 @@
   services = {
     emacs.enable = true;
     gpg-agent.enable = true;
+
+    recoll = {
+      enable = true;
+      settings = {
+        topdirs = [ "~/Documents" "/run/media/fabian/Data/Documents" ];
+        indexstemminglanguages = [ "english" "french" "german" "spanish" ];
+        followLinks = 0;
+      };
+    };
   };
 }
