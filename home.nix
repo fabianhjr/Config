@@ -110,6 +110,7 @@
           gnumake
           gnupg
           google-cloud-sdk
+          graphviz
           jetbrains.idea-community
           jq
           kubectl
@@ -119,6 +120,7 @@
           lm_sensors
           nix-linter
           nixpkgs-lint
+          openrgb
           pass
           postgresql_13
           protontricks
