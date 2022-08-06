@@ -48,8 +48,8 @@
           cabal-install
           chez
           (dotty.override { jre = ltsJava; })
-          haskell.compiler.ghc923
-          # (haskell-language-server.override { supportedGhcVersions = [ "902" "923" ]; })
+          haskell.compiler.ghc924
+          # (haskell-language-server.override { supportedGhcVersions = [ "902" "924" ]; })
           gradle_7
           kotlin
           kotlin-language-server
@@ -98,6 +98,7 @@
 	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
 	tools = [
           androidStudioPackages.canary
+          anki
           bind
           # colmapWithCuda
           cmake
