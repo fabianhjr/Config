@@ -60,7 +60,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_18; # _hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_5_19; # _hardened;
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
