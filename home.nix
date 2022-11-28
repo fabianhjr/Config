@@ -5,8 +5,8 @@
     config = {
       allowUnfree = true;
 
-      gcc.arch = "znver2";
-      gcc.tune = "znver2";
+      # gcc.arch = "znver2";
+      # gcc.tune = "znver2";
 
       packageOverrides = pkgs: {
         nur = import (builtins.fetchTarball
@@ -33,34 +33,19 @@
 
     packages = with pkgs;
       let
-        ltsJava = openjdk11;
-        communications = [ discord fractal ssb-patchwork tdesktop ];
+        communications = [ discord fractal tdesktop ];
         extensions = with gnomeExtensions; [ freon gsconnect ];
         functional = [
-          # agda
-          # agda-pkg
-          cabal-install
-          chez
-          (dotty.override { jre = ltsJava; })
-          haskell.compiler.ghc924
-          # (haskell-language-server.override { supportedGhcVersions = [ "902" "924" ]; })
-          gradle_7
-          kotlin
-          kotlin-language-server
-          kotlin-native
-          ktlint
+          dotty
           metals
-          (mill.override { jre = ltsJava; })
-          racket
-          sbcl
+          mill
           sbt
           scalafmt
         ];
         imperative = [
-          gcc
-          nodejs-18_x
-          ltsJava
-          (python310.withPackages (ps: with ps; [
+          llvmPackages_latest.clang
+          nodejs
+          (python311.withPackages (ps: with ps; [
             build
             mypy
             pip
@@ -74,15 +59,12 @@
         ];
         media = [
           calibre
-          celluloid
           darktable
-          digikam
+          # digikam
           ffmpeg-full
           fira-code
           gimp
-          inkscape
           kdenlive
-          mpv
           nur.repos.wolfangaukang.vdhcoapp
           pandoc
           rhythmbox
@@ -91,24 +73,21 @@
 	];
 	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
 	tools = [
-          androidStudioPackages.canary
-          anki
-          bind
-          # colmapWithCuda
-          cmake
+          anki-bin
           dbeaver
           dbmate
           direnv
           exercism
-          gettext
           gh
+          # gnome.gnome-books
           gnome.gnome-tweaks
-          gnumake
+          # gns3-gui
+          # gns3-server
           gnupg
           google-cloud-sdk
-          graphviz
           jetbrains.idea-community
           jq
+          kubeaudit
           kubectl
           kubernetes-helm
           # libreoffice
@@ -116,20 +95,21 @@
           lm_sensors
           nix-linter
           nixpkgs-lint
-          openrgb
+          nmap
+          # obs-studio
+          # openrgb
           pass
-          postgresql_13
           protontricks
           qbittorrent
-          recoll
+          qemu
           ripgrep
           sqlite
-          stack
           tree
           vim
           visualvm
           winetricks
-          zeal
+          wireshark
+          zeal-qt6
         ];
         vc = [ git git-lfs pijul ];
       in communications ++ extensions ++ functional ++ imperative ++ math
@@ -177,7 +157,7 @@
     gpg-agent.enable = true;
 
     recoll = {
-      enable = true;
+      enable = false;
       settings = {
         topdirs = [ "~/Documents" "/run/media/fabian/Data/Documents" ];
         indexstemminglanguages = [ "english" "french" "german" "spanish" ];

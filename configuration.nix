@@ -14,6 +14,8 @@
 
     extraOptions = ''
       experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
     '';
   };
 
@@ -42,6 +44,7 @@
       driSupport32Bit = true;
       setLdLibraryPath = true;
     };
+
     pulseaudio.enable = false;
   };
 
@@ -60,7 +63,8 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_19; # _hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_0_hardened;
+    kernelParams = [ "amd_pstate.enable=1" "amd_pstate.shared_mem=1" ];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
@@ -72,11 +76,15 @@
 
   networking = {
     firewall = {
-      allowedTCPPorts = [      4001 8000 8008 8010 8989 ];
+      allowedTCPPorts = [
+      # 4444
+      ];
       allowedTCPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
       ];
-      allowedUDPPorts = [ 1900 4001 8000 8008 8010 8989 ];
+      allowedUDPPorts = [
+      # 4444
+      ];
       allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
       ];
@@ -101,7 +109,7 @@
     dbus.packages = with pkgs; [ dconf ];
 
     gnome = {
-      chrome-gnome-shell.enable = true;
+      gnome-browser-connector.enable = true;
       gnome-keyring.enable = true;
       gnome-online-accounts.enable = true;
     };
@@ -129,10 +137,10 @@
 
     # EXTRA
 
-    ipfs = {
+    kubo = {
       enable   = true;
       enableGC = true;
-      extraConfig = {
+      settings = {
         Swarm = {
           ConnMgr = {
             LowWater = 1000;
@@ -146,6 +154,12 @@
       };
       localDiscovery  = true;
       startWhenNeeded = true;
+    };
+
+    # Lightweight k8s
+    k3s = {
+      enable = false;
+      role = "server";
     };
 
     keybase.enable = true;
@@ -169,9 +183,13 @@
   };
 
   environment = {
-    gnome.excludePackages = [ ]; 
-    systemPackages = with pkgs; [
-      gnome.libgnome-keyring
+    gnome.excludePackages = with pkgs; [
+      gnome.gnome-maps
+      gnome-photos
+    ]; 
+    systemPackages = with pkgs; with gnome; [
+      gnome-boxes
+      libgnome-keyring
       # To keey in sync with the daemon version
       keybase
       keybase-gui

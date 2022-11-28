@@ -22,7 +22,7 @@
        workspaces        ; tab emulation, persistence & separate workspaces
 
        ; input
-       multiple-cursors  ; editing in many places at once
+       ; multiple-cursors  ; editing in many places at once
        window-select     ; visually switch windows
 
        :completion
@@ -78,7 +78,7 @@
        java ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        julia             ; a better, faster MATLAB
-       (kotlin +lsp)     ; a better, slicker Java(Script)
+       kotlin            ; a better, slicker Java(Script)
        lua               ; one-based indices? one-based indices
        nim               ; python + lisp at the speed of c
        python            ; beautiful is better than ugly
@@ -104,7 +104,7 @@
 
        ; Dependent
        agda              ; types of types of types of types...
-       coq               ; proofs-as-programs
+       ; coq               ; proofs-as-programs
        ; idris             ; a language you can depend on
 
        :app
