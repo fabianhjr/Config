@@ -138,7 +138,7 @@
     # EXTRA
 
     kubo = {
-      enable   = true;
+      enable   = false;
       enableGC = true;
       settings = {
         Swarm = {
@@ -158,7 +158,7 @@
 
     # Lightweight k8s
     k3s = {
-      enable = false;
+      enable = true;
       role = "server";
     };
 

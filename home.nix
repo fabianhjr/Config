@@ -68,7 +68,7 @@
           nur.repos.wolfangaukang.vdhcoapp
           pandoc
           rhythmbox
-          texlive.combined.scheme-medium
+          # texlive.combined.scheme-medium
           vlc
 	];
 	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
@@ -103,8 +103,10 @@
           qbittorrent
           qemu
           ripgrep
+          sonar-scanner-cli
           sqlite
           tree
+          trivy
           vim
           visualvm
           winetricks
