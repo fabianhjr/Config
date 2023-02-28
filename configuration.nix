@@ -63,7 +63,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_0_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_1_hardened;
     kernelParams = [ "amd_pstate.enable=1" "amd_pstate.shared_mem=1" ];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
@@ -138,7 +138,7 @@
     # EXTRA
 
     kubo = {
-      enable   = false;
+      enable   = true;
       enableGC = true;
       settings = {
         Swarm = {

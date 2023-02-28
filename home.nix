@@ -33,7 +33,7 @@
 
     packages = with pkgs;
       let
-        communications = [ discord fractal tdesktop ];
+        communications = [ discord tdesktop ];
         extensions = with gnomeExtensions; [ freon gsconnect ];
         functional = [
           dotty
@@ -43,6 +43,7 @@
           scalafmt
         ];
         imperative = [
+          jdk17
           llvmPackages_latest.clang
           nodejs
           (python311.withPackages (ps: with ps; [
@@ -59,16 +60,17 @@
         ];
         media = [
           calibre
-          darktable
+          # darktable
           # digikam
           ffmpeg-full
           fira-code
-          gimp
+          # gimp
           kdenlive
           nur.repos.wolfangaukang.vdhcoapp
           pandoc
+          haskellPackages.pandoc-crossref
           rhythmbox
-          # texlive.combined.scheme-medium
+          texlive.combined.scheme-full
           vlc
 	];
 	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
@@ -79,6 +81,7 @@
           direnv
           exercism
           gh
+          gnome.ghex
           # gnome.gnome-books
           gnome.gnome-tweaks
           # gns3-gui
@@ -93,11 +96,12 @@
           # libreoffice
           librsvg
           lm_sensors
-          nix-linter
           nixpkgs-lint
+          nixpkgs-review
           nmap
           # obs-studio
           # openrgb
+          ossec
           pass
           protontricks
           qbittorrent
@@ -105,6 +109,7 @@
           ripgrep
           sonar-scanner-cli
           sqlite
+          suricata
           tree
           trivy
           vim
@@ -113,7 +118,12 @@
           wireshark
           zeal-qt6
         ];
-        vc = [ git git-lfs pijul ];
+        vc = [
+          git
+          git-extras
+          git-lfs
+          pijul
+        ];
       in communications ++ extensions ++ functional ++ imperative ++ math
       ++ media ++ spell ++ tools ++ vc;
   };
