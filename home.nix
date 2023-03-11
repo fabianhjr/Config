@@ -33,13 +33,15 @@
 
     packages = with pkgs;
       let
-        communications = [ discord tdesktop ];
+        communications = [ discord fractal tdesktop ];
         extensions = with gnomeExtensions; [ freon gsconnect ];
         functional = [
           dotty
           metals
           mill
-          sbt
+          (sbt.override {
+            jre = jdk17;
+          })
           scalafmt
         ];
         imperative = [
@@ -60,11 +62,11 @@
         ];
         media = [
           calibre
-          # darktable
-          # digikam
+          darktable
+          digikam
           ffmpeg-full
           fira-code
-          # gimp
+          gimp
           kdenlive
           nur.repos.wolfangaukang.vdhcoapp
           pandoc
@@ -82,7 +84,6 @@
           exercism
           gh
           gnome.ghex
-          # gnome.gnome-books
           gnome.gnome-tweaks
           # gns3-gui
           # gns3-server
@@ -93,15 +94,13 @@
           kubeaudit
           kubectl
           kubernetes-helm
-          # libreoffice
-          librsvg
+          libreoffice
           lm_sensors
           nixpkgs-lint
           nixpkgs-review
           nmap
-          # obs-studio
-          # openrgb
-          ossec
+          obs-studio
+          openrgb
           pass
           protontricks
           qbittorrent
@@ -109,9 +108,8 @@
           ripgrep
           sonar-scanner-cli
           sqlite
-          suricata
           tree
-          trivy
+          tmate
           vim
           visualvm
           winetricks

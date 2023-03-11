@@ -31,7 +31,7 @@
   };
 
   system = {
-    stateVersion = "22.05";
+    stateVersion = "22.11";
     replaceRuntimeDependencies = [];
   };
 
@@ -63,7 +63,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_1_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_2; # _hardened;
     kernelParams = [ "amd_pstate.enable=1" "amd_pstate.shared_mem=1" ];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
@@ -165,9 +165,13 @@
     keybase.enable = true;
     kbfs.enable    = true;
 
-    postgresql = {
+    postgresql = let
+      postgres = pkgs.postgresql_15;
+    in {
       enable = true;
-      package = pkgs.postgresql_13;
+      package = postgres;
+      extraPlugins = with postgres.pkgs; [ postgis ];
+
       authentication =
         "
          local all all              trust
