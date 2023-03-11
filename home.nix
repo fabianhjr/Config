@@ -38,7 +38,6 @@
         functional = [
           dotty
           metals
-          mill
           (sbt.override {
             jre = jdk17;
           })
@@ -46,16 +45,6 @@
         ];
         imperative = [
           jdk17
-          llvmPackages_latest.clang
-          nodejs
-          (python311.withPackages (ps: with ps; [
-            build
-            mypy
-            pip
-            pytest
-            pytest-cov
-            setuptools
-          ]))
         ];
         math = [
           # sage
@@ -68,6 +57,7 @@
           fira-code
           gimp
           kdenlive
+          librsvg
           nur.repos.wolfangaukang.vdhcoapp
           pandoc
           haskellPackages.pandoc-crossref
@@ -79,21 +69,14 @@
 	tools = [
           anki-bin
           dbeaver
-          dbmate
           direnv
           exercism
           gh
-          gnome.ghex
           gnome.gnome-tweaks
-          # gns3-gui
-          # gns3-server
           gnupg
-          google-cloud-sdk
           jetbrains.idea-community
           jq
-          kubeaudit
           kubectl
-          kubernetes-helm
           libreoffice
           lm_sensors
           nixpkgs-lint
