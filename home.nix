@@ -29,11 +29,24 @@
     username = "fabian";
     homeDirectory = "/home/fabian";
 
-    stateVersion = "22.05";
+    stateVersion = "22.11";
 
     packages = with pkgs;
       let
-        communications = [ discord fractal tdesktop ];
+        idea-community-fhs = (buildFHSUserEnv {
+          name = "idea-community";
+          targetPkgs = pkgs: (with pkgs; [
+            maven
+            jdk17
+            nodejs-16_x
+            yarn
+            jetbrains.idea-community
+            python311
+            zlib  # needed for NumPy
+          ]);
+          runScript = "idea-community";
+        });
+        communications = [ discord fractal-next tdesktop zoom-us ];
         extensions = with gnomeExtensions; [ freon gsconnect ];
         functional = [
           dotty
@@ -44,7 +57,10 @@
           scalafmt
         ];
         imperative = [
+          go
           jdk17
+          llvmPackages_latest.clang
+          nodejs
         ];
         math = [
           # sage
@@ -67,17 +83,22 @@
 	];
 	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
 	tools = [
+          alloy6
           anki-bin
+          async-profiler
+          bazel
+          ciscoPacketTracer8
           dbeaver
           direnv
           exercism
           gh
           gnome.gnome-tweaks
           gnupg
-          jetbrains.idea-community
+          idea-community-fhs
           jq
           kubectl
-          libreoffice
+          kubernetes-helm
+          # libreoffice
           lm_sensors
           nixpkgs-lint
           nixpkgs-review
@@ -142,7 +163,16 @@
       };
     };
 
+    fish = {
+      enable = true;
+    };
+
     home-manager.enable = true;
+
+    java = {
+      enable = true;
+      package = pkgs.jdk17;
+    };
   };
 
   services = {

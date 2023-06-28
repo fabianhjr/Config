@@ -14,8 +14,6 @@
 
     extraOptions = ''
       experimental-features = nix-command flakes
-      keep-outputs = true
-      keep-derivations = true
     '';
   };
 
@@ -23,11 +21,6 @@
     config = {
       allowUnfree = true;
     };
-
-    overlays = [(self: super: {
-      # too expensive
-      # stdenv = super.impureUseNativeOptimizations super.stdenv;
-    })];
   };
 
   system = {
@@ -140,25 +133,26 @@
     kubo = {
       enable   = true;
       enableGC = true;
+
       settings = {
         Swarm = {
           ConnMgr = {
-            LowWater = 1000;
-            HighWater = 2000;
+            LowWater = 500;
+            HighWater = 1000;
           };
           Transports.Network = {
-            TCP = true;
+            TCP = false;
             Websocket = false;
+            WebTransport = false;
           };
         };
       };
       localDiscovery  = true;
-      startWhenNeeded = true;
     };
 
     # Lightweight k8s
     k3s = {
-      enable = true;
+      enable = false;
       role = "server";
     };
 
@@ -177,25 +171,28 @@
          local all all              trust
          host  all all 127.0.0.1/32 trust
          host  all all      ::1/128 trust
-         host  all all    localhost trust
         ";
     };
   };
 
   virtualisation = {
-    docker.enable = true;
+    podman = {
+      enable = true;
+
+      autoPrune = {
+        enable = true;
+        dates  = "daily";
+      };
+
+      dockerCompat = true;
+    };
   };
 
   environment = {
-    gnome.excludePackages = with pkgs; [
-      gnome.gnome-maps
-      gnome-photos
-    ]; 
+    gnome.excludePackages = with pkgs; with gnome; [
+      geary
+    ];
     systemPackages = with pkgs; with gnome; [
-      gnome-boxes
-      libgnome-keyring
-      # To keey in sync with the daemon version
-      keybase
       keybase-gui
     ];
   };
@@ -203,7 +200,7 @@
   users.users = {
     fabian = {
       isNormalUser = true;
-      extraGroups  = [ "wheel" "audio" "docker" ];
+      extraGroups  = [ "wheel" "audio" "docker" config.services.kubo.group ];
       shell        = pkgs.fish;
     };
   };

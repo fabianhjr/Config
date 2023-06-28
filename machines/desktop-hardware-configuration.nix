@@ -8,16 +8,29 @@
 
   networking.hostName = "fabian-tower";
 
-  # nixpkgs.localSystem = {
-  #   gcc.arch = "znver2";
-  #   gcc.tune = "znver2";
-  #   system = "x86_64-linux";
-  # };
+  nix.settings = {
+    max-jobs = lib.mkDefault 4;
+    system-features = [
+      "benchmark"
+      "big-parallel"
+      "kvm"
+      "nixos-test"
+      "gccarch-x86-64-v2"
+      "gccarch-x86-64-v3"
+      "gccarch-znver3"
+    ];
+  };
+
+#  nixpkgs.localSystem = {
+#    gcc.arch = "x86-64-v2";
+#    gcc.tune = "x86-64-v2";
+#    system = "x86_64-linux";
+#  };
 
   hardware.nvidia = {
     modesetting.enable = true;
     # nvidiaPersistenced = true;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
     powerManagement.enable = true;
   };
 
@@ -64,6 +77,4 @@
   swapDevices = [
     { device = "/dev/disk/by-uuid/7f4f1bd5-6012-4ac5-8256-a4b0979539c1"; }
   ];
-
-  nix.settings.max-jobs = lib.mkDefault 4;
 }
