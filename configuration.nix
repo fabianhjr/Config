@@ -56,8 +56,11 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_2; # _hardened;
-    kernelParams = [ "amd_pstate.enable=1" "amd_pstate.shared_mem=1" ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_4; # _hardened;
+    kernelParams = [
+      "amd_pstate.enable=1"
+      "amd_pstate.shared_mem=1"
+    ];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
@@ -70,7 +73,7 @@
   networking = {
     firewall = {
       allowedTCPPorts = [
-      # 4444
+        # 4444
       ];
       allowedTCPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
@@ -90,7 +93,6 @@
 
   time.timeZone = "America/Mexico_City";
 
-  # Cannot put in home.nix as it causes some config issues
   programs = {
     fish.enable = true;
     steam.enable = true;

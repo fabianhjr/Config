@@ -5,9 +5,6 @@
     config = {
       allowUnfree = true;
 
-      # gcc.arch = "znver2";
-      # gcc.tune = "znver2";
-
       packageOverrides = pkgs: {
         nur = import (builtins.fetchTarball
           "https://github.com/nix-community/NUR/archive/master.tar.gz") {
@@ -15,21 +12,13 @@
           };
       };
     };
-
-    overlays = [
-      (self: super:
-        {
-          # too expensive
-          # stdenv = super.impureUseNativeOptimizations super.stdenv;
-        })
-    ];
   };
 
   home = {
     username = "fabian";
     homeDirectory = "/home/fabian";
 
-    stateVersion = "22.11";
+    stateVersion = "23.05";
 
     packages = with pkgs;
       let
@@ -38,7 +27,7 @@
           targetPkgs = pkgs: (with pkgs; [
             maven
             jdk17
-            nodejs-16_x
+            nodejs-18_x
             yarn
             jetbrains.idea-community
             python311
@@ -165,6 +154,13 @@
 
     fish = {
       enable = true;
+      shellInit = ''
+        set -gx EDITOR emacsclient
+
+        set -gx PATH ~/.local/node/bin/ $PATH
+        set -gx PATH ~/.cargo/bin $PATH
+        set -gx PATH ~/.local/bin $PATH
+      '';
     };
 
     home-manager.enable = true;
