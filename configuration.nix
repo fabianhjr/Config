@@ -24,7 +24,7 @@
   };
 
   system = {
-    stateVersion = "22.11";
+    stateVersion = "23.05";
     replaceRuntimeDependencies = [];
   };
 
@@ -33,6 +33,9 @@
   #
 
   hardware = {
+    keyboard = {
+      zsa.enable = true;
+    };
     opengl = {
       driSupport32Bit = true;
       setLdLibraryPath = true;
@@ -56,7 +59,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_4; # _hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_5; # _hardened;
     kernelParams = [
       "amd_pstate.enable=1"
       "amd_pstate.shared_mem=1"
@@ -83,6 +86,12 @@
       ];
       allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
+      ];
+    };
+
+    networkmanager = {
+      plugins = with pkgs; [
+        networkmanager-openvpn
       ];
     };
   };
@@ -116,18 +125,17 @@
       pulse.enable = true;
     };
 
-    udev.packages = with pkgs; [ libu2f-host fuse ];
+    udev = {
+      packages = with pkgs; [ libu2f-host fuse ];
+    };
 
     xserver = {
       desktopManager.gnome.enable = true;
-
-      displayManager.gdm = {
-        enable = true;
-      };
+      displayManager.gdm.enable = true;
 
       enable = true;
       layout = "us";
-      xkbVariant = "dvorak-intl";
+      # xkbVariant = "dvorak-intl";
     };
 
     # EXTRA
@@ -137,6 +145,19 @@
       enableGC = true;
 
       settings = {
+        Addresses = {
+          API = [
+            "/ip4/127.0.0.1/tcp/5001"
+          ];
+          Gateway = [
+            "/ip4/127.0.0.1/tcp/9000"
+          ];
+          Swarm = [
+            "/ip6/::/udp/4001/quic-v1"
+            "/ip6/::/udp/4001/quic-v1/webtransport"
+          ];
+        };
+
         Swarm = {
           ConnMgr = {
             LowWater = 500;
@@ -154,7 +175,7 @@
 
     # Lightweight k8s
     k3s = {
-      enable = false;
+      enable = true;
       role = "server";
     };
 
@@ -166,7 +187,7 @@
     in {
       enable = true;
       package = postgres;
-      extraPlugins = with postgres.pkgs; [ postgis ];
+      extraPlugins = with postgres.pkgs; [ ]; # postgis ];
 
       authentication =
         "
@@ -175,11 +196,13 @@
          host  all all      ::1/128 trust
         ";
     };
+
+    tiddlywiki.enable = false;
   };
 
   virtualisation = {
     podman = {
-      enable = true;
+      enable = false;
 
       autoPrune = {
         enable = true;
@@ -192,7 +215,8 @@
 
   environment = {
     gnome.excludePackages = with pkgs; with gnome; [
-      geary
+      orca
+      yelp
     ];
     systemPackages = with pkgs; with gnome; [
       keybase-gui

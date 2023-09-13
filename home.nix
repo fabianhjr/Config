@@ -35,88 +35,65 @@
           ]);
           runScript = "idea-community";
         });
-        communications = [ discord fractal-next tdesktop zoom-us ];
+        communications = [
+          discord
+          # fractal-next
+          tdesktop
+          slack
+          zoom-us
+        ];
         extensions = with gnomeExtensions; [ freon gsconnect ];
-        functional = [
-          dotty
-          metals
-          (sbt.override {
-            jre = jdk17;
-          })
-          scalafmt
-        ];
-        imperative = [
-          go
-          jdk17
-          llvmPackages_latest.clang
-          nodejs
-        ];
-        math = [
-          # sage
-        ];
-        media = [
-          calibre
-          darktable
-          digikam
-          ffmpeg-full
-          fira-code
-          gimp
-          kdenlive
-          librsvg
-          nur.repos.wolfangaukang.vdhcoapp
-          pandoc
-          haskellPackages.pandoc-crossref
-          rhythmbox
-          texlive.combined.scheme-full
-          vlc
+	media = [
+			calibre
+			darktable
+			digikam
+			ffmpeg-full
+			fira-code
+			gimp
+			minecraft
+			nur.repos.wolfangaukang.vdhcoapp
+			rhythmbox
+			vlc
 	];
 	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
 	tools = [
-          alloy6
-          anki-bin
-          async-profiler
-          bazel
-          ciscoPacketTracer8
-          dbeaver
-          direnv
-          exercism
-          gh
-          gnome.gnome-tweaks
-          gnupg
-          idea-community-fhs
-          jq
-          kubectl
-          kubernetes-helm
-          # libreoffice
-          lm_sensors
-          nixpkgs-lint
-          nixpkgs-review
-          nmap
-          obs-studio
-          openrgb
-          pass
-          protontricks
-          qbittorrent
-          qemu
-          ripgrep
-          sonar-scanner-cli
-          sqlite
-          tree
-          tmate
-          vim
-          visualvm
-          winetricks
-          wireshark
-          zeal-qt6
-        ];
-        vc = [
-          git
-          git-extras
-          git-lfs
-          pijul
-        ];
-      in communications ++ extensions ++ functional ++ imperative ++ math
-      ++ media ++ spell ++ tools ++ vc;
+			anki-bin
+			# ciscoPacketTracer8
+			dbeaver
+			direnv
+			gh
+			gnome.gnome-tweaks
+			gnupg
+			idea-community-fhs
+                        jq
+			logseq
+			lm_sensors
+			nixpkgs-lint
+			nixpkgs-review
+			obs-studio
+			openrgb
+			pass
+			pinentry
+			protontricks
+      python3
+			qbittorrent
+			ripgrep
+			sqlite
+			tree
+			tmate
+			vim
+			visualvm
+			winetricks
+			zeal-qt6
+			];
+	vc = [
+		git
+			git-extras
+			git-filter-repo
+			git-lfs
+			pijul
+	];
+	in communications ++ extensions ++ media ++ spell ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions =
@@ -133,9 +110,13 @@
     bat.enable = true;
     browserpass.enable = true;
 
+    chromium = {
+      enable = false;
+    };
+
     emacs = {
       enable = true;
-      package = pkgs.emacs28NativeComp;
+      package = pkgs.emacs29-pgtk;
       extraPackages = epkgs:
         with epkgs; [
           # agda2-mode # Needs to be from same build as agda
@@ -176,7 +157,7 @@
     gpg-agent.enable = true;
 
     recoll = {
-      enable = false;
+      enable = true;
       settings = {
         topdirs = [ "~/Documents" "/run/media/fabian/Data/Documents" ];
         indexstemminglanguages = [ "english" "french" "german" "spanish" ];
