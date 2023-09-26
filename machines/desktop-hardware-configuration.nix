@@ -9,7 +9,8 @@
   networking.hostName = "fabian-tower";
 
   nix.settings = {
-    max-jobs = lib.mkDefault 4;
+    cores = 4;
+    max-jobs = 4;
     system-features = [
       "benchmark"
       "big-parallel"
@@ -26,20 +27,6 @@
 #    gcc.tune = "x86-64-v2";
 #    system = "x86_64-linux";
 #  };
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    # nvidiaPersistenced = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-    powerManagement.enable = true;
-  };
-
-  services.xserver = {
-    videoDrivers = [ "nvidia" ];
-    screenSection = ''
-      Option "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
-    '';
-  };
 
   boot = {
     initrd = {

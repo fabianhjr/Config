@@ -37,7 +37,6 @@
       zsa.enable = true;
     };
     opengl = {
-      driSupport32Bit = true;
       setLdLibraryPath = true;
     };
 
@@ -61,8 +60,6 @@
 
     kernelPackages = pkgs.linuxKernel.packages.linux_6_5; # _hardened;
     kernelParams = [
-      "amd_pstate.enable=1"
-      "amd_pstate.shared_mem=1"
     ];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
@@ -121,7 +118,6 @@
     pipewire = {
       enable = true;
       alsa.enable = true;
-      alsa.support32Bit = true;
       pulse.enable = true;
     };
 
@@ -135,7 +131,6 @@
 
       enable = true;
       layout = "us";
-      # xkbVariant = "dvorak-intl";
     };
 
     # EXTRA
@@ -179,11 +174,8 @@
       role = "server";
     };
 
-    keybase.enable = true;
-    kbfs.enable    = true;
-
     postgresql = let
-      postgres = pkgs.postgresql_15;
+      postgres = pkgs.postgresql_16;
     in {
       enable = true;
       package = postgres;
@@ -202,7 +194,7 @@
 
   virtualisation = {
     podman = {
-      enable = false;
+      enable = true;
 
       autoPrune = {
         enable = true;
@@ -215,7 +207,6 @@
 
   environment = {
     gnome.excludePackages = with pkgs; with gnome; [
-      orca
       yelp
     ];
     systemPackages = with pkgs; with gnome; [

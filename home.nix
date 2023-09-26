@@ -27,7 +27,7 @@
           targetPkgs = pkgs: (with pkgs; [
             maven
             jdk17
-            nodejs-18_x
+            nodejs
             yarn
             jetbrains.idea-community
             python311
@@ -37,63 +37,59 @@
         });
         communications = [
           discord
-          # fractal-next
           tdesktop
           slack
           zoom-us
         ];
         extensions = with gnomeExtensions; [ freon gsconnect ];
-	media = [
-			calibre
-			darktable
-			digikam
-			ffmpeg-full
-			fira-code
-			gimp
-			minecraft
-			nur.repos.wolfangaukang.vdhcoapp
-			rhythmbox
-			vlc
-	];
-	spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
-	tools = [
-			anki-bin
-			# ciscoPacketTracer8
-			dbeaver
-			direnv
-			gh
-			gnome.gnome-tweaks
-			gnupg
-			idea-community-fhs
-                        jq
-			logseq
-			lm_sensors
-			nixpkgs-lint
-			nixpkgs-review
-			obs-studio
-			openrgb
-			pass
-			pinentry
-			protontricks
-      python3
-			qbittorrent
-			ripgrep
-			sqlite
-			tree
-			tmate
-			vim
-			visualvm
-			winetricks
-			zeal-qt6
-			];
-	vc = [
-		git
-			git-extras
-			git-filter-repo
-			git-lfs
-			pijul
-	];
-	in communications ++ extensions ++ media ++ spell ++ tools ++ vc;
+        media = [
+          calibre
+          darktable
+          digikam
+          ffmpeg-full
+          fira-code
+          gimp
+          minecraft
+          nur.repos.wolfangaukang.vdhcoapp
+          rhythmbox
+          vlc
+        ];
+        spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
+        tools = [
+          anki-bin
+          dbeaver
+          direnv
+          gh
+          gnome.gnome-tweaks
+          gnupg
+          idea-community-fhs
+          lm_sensors
+          nixpkgs-lint
+          nixpkgs-review
+          obs-studio
+          openrgb
+          pass
+          pinentry
+          protontricks
+          python3
+          qbittorrent
+          ripgrep
+          sqlite
+          tree
+          tmate
+          vim
+          visualvm
+          winetricks
+          zeal-qt6
+          ];
+        vc = [
+          git
+          git-extras
+          git-filter-repo
+          git-lfs
+          pijul
+        ];
+      in communications ++ extensions ++ media ++ spell ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions =
@@ -155,6 +151,8 @@
   services = {
     emacs.enable = true;
     gpg-agent.enable = true;
+    kbfs.enable = true;
+    keybase.enable = true;
 
     recoll = {
       enable = true;
