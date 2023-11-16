@@ -34,6 +34,7 @@
       kernelModules = [ "dm_raid" "dm-snapshot" ];
       luks.devices = {
         lvm = {
+          allowDiscards = true;
           device = "/dev/nvme0n1p2";
           preLVM = true;
         };

@@ -33,10 +33,21 @@
   #
 
   hardware = {
+    bluetooth = {
+      settings = {
+        General = {
+          Experimental = true;
+        };
+      };
+    };
     keyboard = {
       zsa.enable = true;
     };
     opengl = {
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ mangohud ];
+      extraPackages32 = with pkgs; [ mangohud ];
       setLdLibraryPath = true;
     };
 
@@ -58,9 +69,9 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_5; # _hardened;
-    kernelParams = [
-    ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_6; #_hardened;
+    kernelParams = [];
+    blacklistedKernelModules = [];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
   };
 
@@ -109,6 +120,11 @@
 
     dbus.packages = with pkgs; [ dconf ];
 
+    fstrim = {
+      enable = true;
+      interval = "daily";
+    };
+
     gnome = {
       gnome-browser-connector.enable = true;
       gnome-keyring.enable = true;
@@ -144,15 +160,7 @@
           API = [
             "/ip4/127.0.0.1/tcp/5001"
           ];
-          Gateway = [
-            "/ip4/127.0.0.1/tcp/9000"
-          ];
-          Swarm = [
-            "/ip6/::/udp/4001/quic-v1"
-            "/ip6/::/udp/4001/quic-v1/webtransport"
-          ];
         };
-
         Swarm = {
           ConnMgr = {
             LowWater = 500;
@@ -170,16 +178,16 @@
 
     # Lightweight k8s
     k3s = {
-      enable = true;
+      enable = false;
       role = "server";
     };
 
     postgresql = let
       postgres = pkgs.postgresql_16;
     in {
-      enable = true;
+      enable = false;
       package = postgres;
-      extraPlugins = with postgres.pkgs; [ ]; # postgis ];
+      extraPlugins = with postgres.pkgs; [ postgis ];
 
       authentication =
         "
@@ -188,13 +196,11 @@
          host  all all      ::1/128 trust
         ";
     };
-
-    tiddlywiki.enable = false;
   };
 
   virtualisation = {
     podman = {
-      enable = true;
+      enable = false;
 
       autoPrune = {
         enable = true;
@@ -207,10 +213,8 @@
 
   environment = {
     gnome.excludePackages = with pkgs; with gnome; [
+      orca
       yelp
-    ];
-    systemPackages = with pkgs; with gnome; [
-      keybase-gui
     ];
   };
 
