@@ -69,7 +69,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_6; #_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_6_hardened;
     kernelParams = [];
     blacklistedKernelModules = [];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
@@ -221,7 +221,7 @@
   users.users = {
     fabian = {
       isNormalUser = true;
-      extraGroups  = [ "wheel" "audio" "docker" config.services.kubo.group ];
+      extraGroups  = [ "audio" "docker" "wheel" config.services.kubo.group ];
       shell        = pkgs.fish;
     };
   };

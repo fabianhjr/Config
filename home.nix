@@ -26,17 +26,18 @@
           name = "idea-community";
           targetPkgs = pkgs: (with pkgs; [
             maven
-            jdk17
+            jdk21
             nodejs
             yarn
-            jetbrains.idea-community
+            jetbrains.idea-community-bin
             python311
             zlib  # needed for NumPy
           ]);
           runScript = "idea-community";
         });
         communications = [
-          discord
+          discord-screenaudio
+          keybase-gui
           tdesktop
           slack
           zoom-us
@@ -49,39 +50,44 @@
           ffmpeg-full
           fira-code
           gimp
-          minecraft
-          nur.repos.wolfangaukang.vdhcoapp
+          mpv
           rhythmbox
+          tidal-hifi
           vlc
         ];
         spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
         tools = [
           anki-bin
           dbeaver
-          direnv
+          exercism
           gh
           gnome.gnome-tweaks
           gnupg
           idea-community-fhs
           lm_sensors
+          nix-tree
           nixpkgs-lint
           nixpkgs-review
+          nvme-cli
           obs-studio
-          openrgb
+          pandoc
           pass
           pinentry
+          protege-distribution
           protontricks
           python3
           qbittorrent
           ripgrep
+          smartmontools
           sqlite
           tree
           tmate
           vim
           visualvm
+          vulnix
           winetricks
           zeal-qt6
-          ];
+        ];
         vc = [
           git
           git-extras
@@ -103,11 +109,17 @@
     ];
 
   programs = {
+    atuin.enable = true;
     bat.enable = true;
     browserpass.enable = true;
 
     chromium = {
       enable = false;
+    };
+
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
     };
 
     emacs = {
