@@ -18,7 +18,7 @@
     username = "fabian";
     homeDirectory = "/home/fabian";
 
-    stateVersion = "23.05";
+    stateVersion = "23.11";
 
     packages = with pkgs;
       let
@@ -36,13 +36,18 @@
           runScript = "idea-community";
         });
         communications = [
+          discord
           discord-screenaudio
+          gtkcord4
           keybase-gui
           tdesktop
           slack
           zoom-us
         ];
-        extensions = with gnomeExtensions; [ freon gsconnect ];
+        extensions = with gnomeExtensions; [
+          freon
+          gsconnect
+        ];
         media = [
           calibre
           darktable
@@ -65,6 +70,7 @@
           gnupg
           idea-community-fhs
           lm_sensors
+          lutris
           nix-tree
           nixpkgs-lint
           nixpkgs-review
@@ -72,7 +78,6 @@
           obs-studio
           pandoc
           pass
-          pinentry
           protege-distribution
           protontricks
           python3
@@ -85,8 +90,9 @@
           vim
           visualvm
           vulnix
+          wine
           winetricks
-          zeal-qt6
+          zeal-qt5
         ];
         vc = [
           git
@@ -162,7 +168,10 @@
 
   services = {
     emacs.enable = true;
-    gpg-agent.enable = true;
+    gpg-agent = {
+      enable = true;
+      pinentryFlavor = "gnome3"; 
+    };
     kbfs.enable = true;
     keybase.enable = true;
 

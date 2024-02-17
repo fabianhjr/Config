@@ -69,7 +69,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_6_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_7_hardened;
     kernelParams = [];
     blacklistedKernelModules = [];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
@@ -146,7 +146,7 @@
       displayManager.gdm.enable = true;
 
       enable = true;
-      layout = "us";
+      xkb.layout = "us";
     };
 
     # EXTRA
@@ -178,7 +178,7 @@
 
     # Lightweight k8s
     k3s = {
-      enable = false;
+      enable = true;
       role = "server";
     };
 
@@ -200,7 +200,7 @@
 
   virtualisation = {
     podman = {
-      enable = false;
+      enable = true;
 
       autoPrune = {
         enable = true;
@@ -221,7 +221,7 @@
   users.users = {
     fabian = {
       isNormalUser = true;
-      extraGroups  = [ "audio" "docker" "wheel" config.services.kubo.group ];
+      extraGroups  = [ "audio" "docker" "podman" "wheel" config.services.kubo.group ];
       shell        = pkgs.fish;
     };
   };
