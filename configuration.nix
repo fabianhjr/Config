@@ -131,6 +131,8 @@
       gnome-online-accounts.enable = true;
     };
 
+    netbird.enable = true;
+
     pipewire = {
       enable = true;
       alsa.enable = true;

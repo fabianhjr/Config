@@ -120,7 +120,7 @@
     browserpass.enable = true;
 
     chromium = {
-      enable = false;
+      enable = true;
     };
 
     direnv = {
