@@ -18,7 +18,7 @@
     username = "fabian";
     homeDirectory = "/home/fabian";
 
-    stateVersion = "23.11";
+    stateVersion = "24.05";
 
     packages = with pkgs;
       let
@@ -37,7 +37,6 @@
         });
         communications = [
           discord
-          discord-screenaudio
           gtkcord4
           keybase-gui
           tdesktop
@@ -51,7 +50,7 @@
         media = [
           calibre
           darktable
-          digikam
+          # digikam
           ffmpeg-full
           fira-code
           gimp
@@ -62,11 +61,13 @@
         ];
         spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
         tools = [
+          amdgpu_top
           anki-bin
-          dbeaver
+          devenv
+          dbeaver-bin
           exercism
           gh
-          gnome.gnome-tweaks
+          gnome-tweaks
           gnupg
           idea-community-fhs
           lm_sensors
@@ -74,6 +75,7 @@
           nix-tree
           nixpkgs-lint
           nixpkgs-review
+          nmap
           nvme-cli
           obs-studio
           pandoc
@@ -92,7 +94,7 @@
           vulnix
           wine
           winetricks
-          zeal-qt5
+          zeal
         ];
         vc = [
           git
@@ -121,6 +123,7 @@
 
     chromium = {
       enable = true;
+      package = pkgs.google-chrome;
     };
 
     direnv = {
@@ -170,7 +173,7 @@
     emacs.enable = true;
     gpg-agent = {
       enable = true;
-      pinentryFlavor = "gnome3"; 
+      pinentryPackage = pkgs.pinentry-gnome3;
     };
     kbfs.enable = true;
     keybase.enable = true;

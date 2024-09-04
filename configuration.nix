@@ -24,7 +24,7 @@
   };
 
   system = {
-    stateVersion = "23.05";
+    stateVersion = "23.11";
     replaceRuntimeDependencies = [];
   };
 
@@ -43,19 +43,15 @@
     keyboard = {
       zsa.enable = true;
     };
-    opengl = {
-      driSupport = true;
-      driSupport32Bit = true;
+    graphics = {
       extraPackages = with pkgs; [ mangohud ];
       extraPackages32 = with pkgs; [ mangohud ];
-      setLdLibraryPath = true;
     };
 
     pulseaudio.enable = false;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
-  sound.enable = true;
 
   #
   # Boot/Kernel
@@ -69,7 +65,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_7_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_10;
     kernelParams = [];
     blacklistedKernelModules = [];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;
@@ -84,13 +80,12 @@
   networking = {
     firewall = {
       allowedTCPPorts = [
-        # 4444
+        9090 # Calibre
       ];
       allowedTCPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
       ];
       allowedUDPPorts = [
-      # 4444
       ];
       allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
@@ -140,7 +135,7 @@
     };
 
     udev = {
-      packages = with pkgs; [ libu2f-host fuse ];
+      packages = with pkgs; [ libfido2 fuse ];
     };
 
     xserver = {
@@ -214,7 +209,7 @@
   };
 
   environment = {
-    gnome.excludePackages = with pkgs; with gnome; [
+    gnome.excludePackages = with pkgs; [
       orca
       yelp
     ];

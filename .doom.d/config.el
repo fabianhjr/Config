@@ -9,11 +9,15 @@
 (setq display-line-numbers-type t)
 (setq-default indent-tabs-mode t)
 
-(setq exec-path (append exec-path '("/home/fabian/.local/bin")))
+(setq exec-path (append exec-path '("~/.local/bin")))
 
 (setq org-directory "~/Documents/KnowledgeBase/")
 
-(setq org-agenda-files "~/Documents/KnowledgeBase/Agenda.org")
+(setq org-agenda-files (append
+      (directory-files-recursively "~/Documents/KnowledgeBase/Journal" "\\.org$")
+      ))
+
+(setq org-log-done 'time)
 
 (setq org-roam-complete-everywhere t)
 (setq org-roam-directory org-directory)
