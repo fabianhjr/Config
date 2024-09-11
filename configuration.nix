@@ -24,7 +24,7 @@
   };
 
   system = {
-    stateVersion = "23.11";
+    stateVersion = "24.05";
     replaceRuntimeDependencies = [];
   };
 
@@ -111,8 +111,6 @@
   };
 
   services = {
-    # Basic Services
-
     dbus.packages = with pkgs; [ dconf ];
 
     fstrim = {
@@ -171,27 +169,6 @@
         };
       };
       localDiscovery  = true;
-    };
-
-    # Lightweight k8s
-    k3s = {
-      enable = true;
-      role = "server";
-    };
-
-    postgresql = let
-      postgres = pkgs.postgresql_16;
-    in {
-      enable = false;
-      package = postgres;
-      extraPlugins = with postgres.pkgs; [ postgis ];
-
-      authentication =
-        "
-         local all all              trust
-         host  all all 127.0.0.1/32 trust
-         host  all all      ::1/128 trust
-        ";
     };
   };
 

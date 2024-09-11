@@ -95,6 +95,7 @@
           wine
           winetricks
           zeal
+          zed-editor
         ];
         vc = [
           git
