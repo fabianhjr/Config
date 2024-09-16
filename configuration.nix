@@ -1,27 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
-
-  #
-  # Nix
-  #
-
-  nix = {
-    settings = {
-      trusted-users = [ "root" "@wheel" ];
-    };
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
+  imports = [
+    # <home-manager/nixos>
+    ./nix-configuration.nix
+    ./hardware-configuration.nix
+  ];
 
   system = {
     stateVersion = "24.05";
@@ -65,7 +49,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_10;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
     kernelParams = [];
     blacklistedKernelModules = [];
     kernel.sysctl."kernel.unprivileged_userns_clone" = true;

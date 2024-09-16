@@ -22,18 +22,31 @@
 
     packages = with pkgs;
       let
-        idea-community-fhs = (buildFHSUserEnv {
-          name = "idea-community";
+        idea-ultimate-fhs = (buildFHSUserEnv {
+          name = "idea";
           targetPkgs = pkgs: (with pkgs; [
             maven
             jdk21
             nodejs
             yarn
-            jetbrains.idea-community-bin
-            python311
-            zlib  # needed for NumPy
+            jetbrains.idea-ultimate
+            python312
+            zlib
           ]);
-          runScript = "idea-community";
+          runScript = "idea";
+        });
+        webstorm-fhs = (buildFHSUserEnv {
+          name = "webstorm";
+          targetPkgs = pkgs: (with pkgs; [
+            maven
+            jdk21
+            nodejs
+            yarn
+            jetbrains.webstorm
+            python312
+            zlib
+          ]);
+          runScript = "webstorm";
         });
         communications = [
           discord
@@ -69,7 +82,8 @@
           gh
           gnome-tweaks
           gnupg
-          idea-community-fhs
+          idea-ultimate-fhs
+          webstorm-fhs
           lm_sensors
           lutris
           nix-tree
