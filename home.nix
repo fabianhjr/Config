@@ -22,35 +22,8 @@
 
     packages = with pkgs;
       let
-        idea-ultimate-fhs = (buildFHSUserEnv {
-          name = "idea";
-          targetPkgs = pkgs: (with pkgs; [
-            maven
-            jdk21
-            nodejs
-            yarn
-            jetbrains.idea-ultimate
-            python312
-            zlib
-          ]);
-          runScript = "idea";
-        });
-        webstorm-fhs = (buildFHSUserEnv {
-          name = "webstorm";
-          targetPkgs = pkgs: (with pkgs; [
-            maven
-            jdk21
-            nodejs
-            yarn
-            jetbrains.webstorm
-            python312
-            zlib
-          ]);
-          runScript = "webstorm";
-        });
         communications = [
           discord
-          gtkcord4
           keybase-gui
           tdesktop
           slack
@@ -63,7 +36,7 @@
         media = [
           calibre
           darktable
-          # digikam
+          digikam
           ffmpeg-full
           fira-code
           gimp
@@ -73,7 +46,18 @@
           vlc
         ];
         spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
+        jetbrainsWithPlugins = (pkg: jetbrains.plugins.addPlugins pkg ["github-copilot"]);
+        jbEditors = with jetbrains; builtins.map jetbrainsWithPlugins [
+          clion
+          datagrip
+          idea-ultimate
+          pycharm-professional
+          ruby-mine
+          rust-rover
+          webstorm
+        ];
         tools = [
+          alacritty
           amdgpu_top
           anki-bin
           devenv
@@ -82,8 +66,6 @@
           gh
           gnome-tweaks
           gnupg
-          idea-ultimate-fhs
-          webstorm-fhs
           lm_sensors
           lutris
           nix-tree
@@ -118,7 +100,7 @@
           git-lfs
           pijul
         ];
-      in communications ++ extensions ++ media ++ spell ++ tools ++ vc;
+      in communications ++ extensions ++ media ++ spell ++ jbEditors ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions =
@@ -176,11 +158,50 @@
       '';
     };
 
+    git = {
+      enable = true;
+      difftastic.enable = true;
+      lfs.enable = true;
+
+      aliases = {
+        # Abreviations
+        amend   = "commit --amend";
+        c       = "commit";
+        co      = "checkout";
+        del     = "branch -d";
+        s       = "status";
+
+        # Fancy Stuff
+        incoming = "log HEAD..@{upstream}";
+        outgoing = "log @{upstream}..HEAD";
+        logline = "log --graph --abbrev-commit";
+      };
+
+      userName = "Fabián Heredia Montiel";
+      userEmail = "fabianhjr@protonmail.com";
+
+
+      extraConfig = {
+        merge = {
+          conflictStyle = "diff3";
+        };
+        pull = {
+          rebase = "true";
+        };
+        push = {
+          default = "current";
+        };
+        rerere = {
+          enabled = "true";
+        };
+      };
+    };
+
     home-manager.enable = true;
 
     java = {
       enable = true;
-      package = pkgs.jdk17;
+      package = pkgs.jdk21;
     };
   };
 
