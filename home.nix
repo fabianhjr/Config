@@ -4,13 +4,6 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-
-      packageOverrides = pkgs: {
-        nur = import (builtins.fetchTarball
-          "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-            inherit pkgs;
-          };
-      };
     };
   };
 
@@ -25,13 +18,9 @@
         communications = [
           discord
           keybase-gui
-          tdesktop
+          # tdesktop
           slack
           zoom-us
-        ];
-        extensions = with gnomeExtensions; [
-          freon
-          gsconnect
         ];
         media = [
           calibre
@@ -40,7 +29,6 @@
           ffmpeg-full
           fira-code
           gimp
-          mpv
           rhythmbox
           tidal-hifi
           vlc
@@ -57,63 +45,46 @@
           webstorm
         ];
         tools = [
-          alacritty
           amdgpu_top
           anki-bin
           devenv
           dbeaver-bin
           exercism
-          gh
           gnome-tweaks
-          gnupg
           lm_sensors
           lutris
           nix-tree
-          nixpkgs-lint
           nixpkgs-review
           nmap
-          nvme-cli
-          obs-studio
-          pandoc
-          pass
           protege-distribution
           protontricks
-          python3
           qbittorrent
-          ripgrep
           smartmontools
-          sqlite
           tree
           tmate
-          vim
-          visualvm
           vulnix
-          wine
           winetricks
           zeal
           zed-editor
         ];
         vc = [
-          git
           git-extras
           git-filter-repo
-          git-lfs
           pijul
         ];
-      in communications ++ extensions ++ media ++ spell ++ jbEditors ++ tools ++ vc;
+      in communications ++ media ++ spell ++ jbEditors ++ tools ++ vc;
   };
 
-  dconf.settings."org/gnome/shell".enabled-extensions =
-    with pkgs.gnomeExtensions; [
-      "backslide@codeisland.org"
-      "CoverflowAltTab@dmo60.de"
-      freon.extensionUuid
-      gsconnect.extensionUuid
-      "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
-      "vertical-overview@RensAlthuis.github.com"
-    ];
+  # dconf.settings."org/gnome/shell".enabled-extensions =
+  #   with pkgs.gnomeExtensions; [
+  #     "backslide@codeisland.org"
+  #     "CoverflowAltTab@dmo60.de"
+  #     "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
+  #     "vertical-overview@RensAlthuis.github.com"
+  #   ];
 
   programs = {
+    alacritty.enable = true;
     atuin.enable = true;
     bat.enable = true;
     browserpass.enable = true;
@@ -140,11 +111,9 @@
 
     firefox = {
       enable = true;
-      package = pkgs.firefox.override {
-        cfg = {
-          enableGnomeExtensions = true;
-        };
-      };
+      nativeMessagingHosts = with pkgs; [
+        gnome-browser-connector
+      ];
     };
 
     fish = {
@@ -157,6 +126,8 @@
         set -gx PATH ~/.local/bin $PATH
       '';
     };
+
+    gh.enable = true;
 
     git = {
       enable = true;
@@ -197,12 +168,30 @@
       };
     };
 
+    gpg.enable = true;
+
+    gnome-shell = {
+      enable = true;
+      extensions = with pkgs.gnomeExtensions; [
+        { package = freon; }
+        { package = gsconnect; }
+      ];
+    };
+
     home-manager.enable = true;
 
     java = {
       enable = true;
       package = pkgs.jdk21;
     };
+
+    mpv.enable = true;
+    obs-studio.enable = true;
+    pandoc.enable = true;
+    password-store.enable = true;
+    ripgrep.enable = true;
+    tmate.enable = true;
+    vim.enable = true;
   };
 
   services = {
