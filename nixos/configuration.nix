@@ -56,7 +56,6 @@
   };
 
   security = {
-    allowUserNamespaces = true;
     apparmor.enable = true;
     rtkit.enable = true;
   };

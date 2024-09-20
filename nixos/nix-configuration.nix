@@ -10,11 +10,11 @@
 
     settings = {
       auto-optimise-store = true;
+      experimental-features = [ "flakes" "nix-command" ];
       trusted-users = [ "root" "@wheel" ];
     };
 
     extraOptions = ''
-      experimental-features = nix-command flakes
       keep-derivations = true
       keep-outputs = true
     '';
