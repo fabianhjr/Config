@@ -1,25 +1,22 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
-{
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
-
+let
+  name  = "Fabián Heredia Montiel";
+  email = "fabianhjr@protonmail.com";
+in {
   home = {
     username = "fabian";
     homeDirectory = "/home/fabian";
 
-    stateVersion = "24.05";
+    stateVersion = "24.11";
 
     packages = with pkgs;
       let
         communications = [
           discord
+          # fractal
           keybase-gui
-          # tdesktop
-          slack
+          telegram-desktop
           zoom-us
         ];
         media = [
@@ -28,7 +25,6 @@
           digikam
           ffmpeg-full
           fira-code
-          gimp
           rhythmbox
           tidal-hifi
           vlc
@@ -48,7 +44,6 @@
           amdgpu_top
           anki-bin
           devenv
-          dbeaver-bin
           exercism
           gnome-tweaks
           lm_sensors
@@ -56,15 +51,16 @@
           nix-tree
           nixpkgs-review
           nmap
-          protege-distribution
           protontricks
           qbittorrent
+          qemu
           smartmontools
           tree
           tmate
           vulnix
           winetricks
-          zeal
+          wireshark
+          zeal-qt6
           zed-editor
         ];
         vc = [
@@ -72,19 +68,18 @@
           git-filter-repo
           pijul
         ];
-      in communications ++ media ++ spell ++ jbEditors ++ tools ++ vc;
+      in communications ++ jbEditors ++ media ++ spell ++ tools ++ vc;
   };
 
-  # dconf.settings."org/gnome/shell".enabled-extensions =
-  #   with pkgs.gnomeExtensions; [
-  #     "backslide@codeisland.org"
-  #     "CoverflowAltTab@dmo60.de"
-  #     "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
-  #     "vertical-overview@RensAlthuis.github.com"
-  #   ];
+  dconf.settings."org/gnome/shell".enabled-extensions =
+    with pkgs.gnomeExtensions; [
+      "backslide@codeisland.org"
+      "CoverflowAltTab@dmo60.de"
+      "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
+      "vertical-overview@RensAlthuis.github.com"
+    ];
 
   programs = {
-    alacritty.enable = true;
     atuin.enable = true;
     bat.enable = true;
     browserpass.enable = true;
@@ -148,11 +143,13 @@
         logline = "log --graph --abbrev-commit";
       };
 
-      userName = "Fabián Heredia Montiel";
-      userEmail = "fabianhjr@protonmail.com";
-
+      userName = name;
+      userEmail = email;
 
       extraConfig = {
+        init = {
+          defaultBranch = "main";
+        };
         merge = {
           conflictStyle = "diff3";
         };
@@ -183,6 +180,19 @@
     java = {
       enable = true;
       package = pkgs.jdk21;
+    };
+
+    jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          inherit name email;
+        };
+        # https://github.com/martinvonz/jj/discussions/3549
+        experimental-advance-branches = {
+          enabled-branches = ["glob:*"];
+        };
+      };
     };
 
     mpv.enable = true;

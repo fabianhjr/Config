@@ -8,6 +8,13 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  nixpkgs.hostPlatform = {
+    # Too expensive due to qtwebengine/electron/webkitgtk
+    # gcc.arch = "znver3";
+    # gcc.tune = "znver3";
+    system = "x86_64-linux";
+  };
+
   boot.initrd = {
     availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ "dm_raid" ];
@@ -51,6 +58,5 @@
   # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

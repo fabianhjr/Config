@@ -2,14 +2,17 @@
 
 {
   imports = [
-    # <home-manager/nixos>
     ./nix-configuration.nix
     ./hardware-configuration.nix
   ];
 
   system = {
     stateVersion = "24.05";
-    replaceRuntimeDependencies = [];
+
+    replaceDependencies.replacements = [];
+    systemBuilderArgs.disallowedRequisites = with pkgs; [
+      cdrtools # License issues
+    ];
   };
 
   #
@@ -17,6 +20,7 @@
   #
 
   hardware = {
+    amdgpu.opencl.enable = true;
     bluetooth = {
       settings = {
         General = {
@@ -24,12 +28,14 @@
         };
       };
     };
+
     keyboard = {
       zsa.enable = true;
     };
+
     graphics = {
-      extraPackages = with pkgs; [ mangohud ];
-      extraPackages32 = with pkgs; [ mangohud ];
+      extraPackages   = with pkgs; [ mangohud ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [ mangohud ];
     };
 
     pulseaudio.enable = false;
@@ -49,10 +55,10 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
-    kernelParams = [];
-    blacklistedKernelModules = [];
-    kernel.sysctl."kernel.unprivileged_userns_clone" = true;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_11_hardened;
+    kernel.sysctl = {
+      "kernel.unprivileged_userns_clone" = true;
+    };
   };
 
   security = {
@@ -61,15 +67,17 @@
   };
 
   networking = {
+    hostName = "fabian-desktop";
+
     firewall = {
       allowedTCPPorts = [
         9090 # Calibre
+        11434 # Ollama
       ];
       allowedTCPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
       ];
-      allowedUDPPorts = [
-      ];
+      allowedUDPPorts = [];
       allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
       ];
@@ -108,6 +116,14 @@
     };
 
     netbird.enable = true;
+    ollama = {
+      enable = true;
+
+      acceleration = "rocm";
+      environmentVariables = {
+        HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+      };
+    };
 
     pipewire = {
       enable = true;
@@ -165,6 +181,7 @@
       };
 
       dockerCompat = true;
+      extraPackages = with pkgs; [ podman-compose ];
     };
   };
 
@@ -172,6 +189,11 @@
     gnome.excludePackages = with pkgs; [
       orca
       yelp
+    ];
+
+    systemPackages = with pkgs.rocmPackages; [
+      clr
+      rocminfo
     ];
   };
 
@@ -183,4 +205,3 @@
     };
   };
 }
-

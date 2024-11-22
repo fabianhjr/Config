@@ -13,11 +13,6 @@
       experimental-features = [ "flakes" "nix-command" ];
       trusted-users = [ "root" "@wheel" ];
     };
-
-    extraOptions = ''
-      keep-derivations = true
-      keep-outputs = true
-    '';
   };
 
   nixpkgs = {
