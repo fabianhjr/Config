@@ -7,7 +7,7 @@
   ];
 
   system = {
-    stateVersion = "24.05";
+    stateVersion = "24.11";
 
     replaceDependencies.replacements = [];
     systemBuilderArgs.disallowedRequisites = with pkgs; [
@@ -20,7 +20,6 @@
   #
 
   hardware = {
-    amdgpu.opencl.enable = true;
     bluetooth = {
       settings = {
         General = {
@@ -37,8 +36,6 @@
       extraPackages   = with pkgs; [ mangohud ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ mangohud ];
     };
-
-    pulseaudio.enable = false;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
@@ -55,7 +52,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_11_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
     kernel.sysctl = {
       "kernel.unprivileged_userns_clone" = true;
     };
@@ -72,7 +69,6 @@
     firewall = {
       allowedTCPPorts = [
         9090 # Calibre
-        11434 # Ollama
       ];
       allowedTCPPortRanges = [
         { from = 1714; to = 1764; } # GSConnect
@@ -116,13 +112,12 @@
     };
 
     netbird.enable = true;
+
     ollama = {
       enable = true;
 
       acceleration = "rocm";
-      environmentVariables = {
-        HSA_OVERRIDE_GFX_VERSION = "11.0.0";
-      };
+      rocmOverrideGfx = "11.0.0";
     };
 
     pipewire = {
@@ -130,6 +125,8 @@
       alsa.enable = true;
       pulse.enable = true;
     };
+
+    pulseaudio.enable = false;
 
     udev = {
       packages = with pkgs; [ libfido2 fuse ];
@@ -189,11 +186,6 @@
     gnome.excludePackages = with pkgs; [
       orca
       yelp
-    ];
-
-    systemPackages = with pkgs.rocmPackages; [
-      clr
-      rocminfo
     ];
   };
 

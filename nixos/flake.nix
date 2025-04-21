@@ -1,10 +1,10 @@
 {
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     # nixpkgs.url = "github:NixOS/nixpkgs/master";
     # nixpkgs.url = "github:NixOS/nixpkgs/staging-next";
-    nixpkgs.url = "git+file:///home/fabian/Development/Open/nixpkgs/main";
+    # nixpkgs.url = "git+file:///home/fabian/Development/Open/nixpkgs/main";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";

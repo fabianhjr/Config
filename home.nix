@@ -14,52 +14,40 @@ in {
       let
         communications = [
           discord
-          # fractal
           keybase-gui
           telegram-desktop
-          zoom-us
         ];
         media = [
           calibre
           darktable
-          digikam
-          ffmpeg-full
+          # digikam
           fira-code
-          rhythmbox
+          ffmpeg-full
           tidal-hifi
           vlc
         ];
-        spell = [ aspell aspellDicts.en aspellDicts.es aspellDicts.eo ];
-        jetbrainsWithPlugins = (pkg: jetbrains.plugins.addPlugins pkg ["github-copilot"]);
+        jetbrainsWithPlugins = (pkg: jetbrains.plugins.addPlugins pkg []);
         jbEditors = with jetbrains; builtins.map jetbrainsWithPlugins [
           clion
           datagrip
           idea-ultimate
           pycharm-professional
-          ruby-mine
           rust-rover
           webstorm
         ];
+        spell = [ enchant ];
         tools = [
-          amdgpu_top
           anki-bin
           devenv
-          exercism
-          gnome-tweaks
+          graphviz
           lm_sensors
           lutris
           nix-tree
           nixpkgs-review
-          nmap
-          protontricks
           qbittorrent
           qemu
           smartmontools
           tree
-          tmate
-          vulnix
-          winetricks
-          wireshark
           zeal-qt6
           zed-editor
         ];
@@ -68,7 +56,7 @@ in {
           git-filter-repo
           pijul
         ];
-      in communications ++ jbEditors ++ media ++ spell ++ tools ++ vc;
+      in communications ++ jbEditors ++ media ++ tools ++ vc;
   };
 
   dconf.settings."org/gnome/shell".enabled-extensions =
@@ -81,7 +69,6 @@ in {
 
   programs = {
     atuin.enable = true;
-    bat.enable = true;
     browserpass.enable = true;
 
     chromium = {
@@ -96,7 +83,7 @@ in {
 
     emacs = {
       enable = true;
-      package = pkgs.emacs29-pgtk;
+      package = pkgs.emacs30-pgtk;
       extraPackages = epkgs:
         with epkgs; [
           # agda2-mode # Needs to be from same build as agda
@@ -196,7 +183,7 @@ in {
     };
 
     mpv.enable = true;
-    obs-studio.enable = true;
+    obs-studio.enable = false;
     pandoc.enable = true;
     password-store.enable = true;
     ripgrep.enable = true;

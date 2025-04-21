@@ -23,9 +23,12 @@
       "luks-1080359b-9b21-4010-baf2-345b27e5f3dc" = {
         device = "/dev/disk/by-uuid/1080359b-9b21-4010-baf2-345b27e5f3dc";
         allowDiscards = true;
-        # Reference: https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance
-        bypassWorkqueues = true;
       };
+
+      # "luks-c846d276-6509-468e-a320-9e1241f15d37" = {
+      #   device = "/dev/disk/by-uuid/c846d276-6509-468e-a320-9e1241f15d37";
+      #   allowDiscards = true;
+      # };
     };
 
     systemd.enable = true;
