@@ -28,12 +28,12 @@ in {
         ];
         jetbrainsWithPlugins = (pkg: jetbrains.plugins.addPlugins pkg []);
         jbEditors = with jetbrains; builtins.map jetbrainsWithPlugins [
-          # clion
-          # datagrip
-          # idea-ultimate
-          # pycharm-professional
-          # rust-rover
-          # webstorm
+          clion
+          datagrip
+          idea-ultimate
+          pycharm-professional
+          rust-rover
+          webstorm
         ];
         tools = [
           anki-bin
