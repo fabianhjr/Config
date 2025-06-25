@@ -7,7 +7,7 @@
   ];
 
   system = {
-    stateVersion = "24.11";
+    stateVersion = "25.05";
 
     replaceDependencies.replacements = [];
     systemBuilderArgs.disallowedRequisites = with pkgs; [
@@ -20,6 +20,10 @@
   #
 
   hardware = {
+    amdgpu = {
+      opencl.enable = true;
+    };
+
     bluetooth = {
       settings = {
         General = {
@@ -52,7 +56,7 @@
       timeout = 3;
     };
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
     kernel.sysctl = {
       "kernel.unprivileged_userns_clone" = true;
     };
@@ -86,6 +90,10 @@
     };
   };
 
+  nixpkgs.config = {
+    rocmSupport = true;
+  };
+
   #
   # Extra
   #
@@ -117,12 +125,13 @@
       enable = true;
 
       acceleration = "rocm";
-      rocmOverrideGfx = "11.0.0";
+      rocmOverrideGfx = "11.0.1";
     };
 
     pipewire = {
       enable = true;
-      alsa.enable = true;
+
+      alsa.enable = false;
       pulse.enable = true;
     };
 
@@ -132,10 +141,10 @@
       packages = with pkgs; [ libfido2 fuse ];
     };
 
-    xserver = {
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
 
+    xserver = {
       enable = true;
       xkb.layout = "us";
     };

@@ -17,7 +17,7 @@
 
   boot.initrd = {
     availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-    kernelModules = [ "dm_raid" ];
+    kernelModules = [ "amdgpu" "dm_raid" ];
 
     luks.devices = {
       "luks-1080359b-9b21-4010-baf2-345b27e5f3dc" = {

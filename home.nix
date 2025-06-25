@@ -20,7 +20,7 @@ in {
         media = [
           calibre
           darktable
-          # digikam
+          digikam
           fira-code
           ffmpeg-full
           tidal-hifi
@@ -28,19 +28,18 @@ in {
         ];
         jetbrainsWithPlugins = (pkg: jetbrains.plugins.addPlugins pkg []);
         jbEditors = with jetbrains; builtins.map jetbrainsWithPlugins [
-          clion
-          datagrip
-          idea-ultimate
-          pycharm-professional
-          rust-rover
-          webstorm
+          # clion
+          # datagrip
+          # idea-ultimate
+          # pycharm-professional
+          # rust-rover
+          # webstorm
         ];
-        spell = [ enchant ];
         tools = [
           anki-bin
-          devenv
           graphviz
           lm_sensors
+          logseq
           lutris
           nix-tree
           nixpkgs-review
@@ -49,7 +48,6 @@ in {
           smartmontools
           tree
           zeal-qt6
-          zed-editor
         ];
         vc = [
           git-extras
@@ -184,7 +182,6 @@ in {
 
     mpv.enable = true;
     obs-studio.enable = false;
-    pandoc.enable = true;
     password-store.enable = true;
     ripgrep.enable = true;
     tmate.enable = true;
@@ -195,7 +192,7 @@ in {
     emacs.enable = true;
     gpg-agent = {
       enable = true;
-      pinentryPackage = pkgs.pinentry-gnome3;
+      pinentry.package = pkgs.pinentry-gnome3;
     };
     kbfs.enable = true;
     keybase.enable = true;

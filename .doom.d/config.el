@@ -4,7 +4,7 @@
       user-mail-address "fabianhjr@protonmail.com")
 
 (setq doom-theme 'badwolf
-      doom-font (font-spec :family "SourceCodePro" :size 18))
+      doom-font (font-spec :family "FiraCode" :size 18))
 
 (setq display-line-numbers-type t)
 (setq-default indent-tabs-mode t)

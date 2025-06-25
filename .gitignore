@@ -5,6 +5,7 @@
 
 # Other VCS
 .anu/
+.jj/
 _darcs/
 .pijul/
 
